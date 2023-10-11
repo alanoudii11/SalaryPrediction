@@ -1,12 +1,14 @@
 install.packages("outliers")
 install.packages("scatterplot3d") 
 install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("colorspace")
 
 
+library(ggplot2)
 library(outliers)
 library(scatterplot3d)
 library(dplyr)
-
 library(readr)
 dataset <- read_csv("GitHub/SalaryPrediction/Dataset/salary.csv")
 
@@ -52,12 +54,12 @@ sum(Outhours)
 Find_outlier = which(Outhours ==TRUE, arr.ind = TRUE)
 Outhours
 ###
-OutcapitalG = outlier(dataset$capital-gain, logical =TRUE)
+OutcapitalG = outlier(dataset$`capital-gain`, logical =TRUE)
 sum(OutcapitalG)
 Find_outlier = which(OutcapitalG ==TRUE, arr.ind = TRUE)
 OutcapitalG
 ###
-OutcapitalL = outlier(dataset$capital-loss, logical =TRUE)
+OutcapitalL = outlier(dataset$`capital-loss`, logical =TRUE)
 sum(OutcapitalL)
 Find_outlier = which(OutcapitalL ==TRUE, arr.ind = TRUE)
 OutcapitalL
@@ -65,8 +67,23 @@ OutcapitalL
 
 #Remove outlier
 dataset= dataset[-Find_outlier,]
-print(dataset)
 
+
+
+# Create a bar plot of the occupation variable
+ggplot(dataset, aes(x = `native-country`)) +
+  geom_bar()
+
+# Create a density plot for the age variable
+ggplot(dataset, aes(x = age)) +
+  geom_density()
+
+# Create a scatter plot of the age and salary variables
+ggplot(dataset, aes(x = age, y = salary)) +
+  geom_point()
+# Create a boxplot of the salary variable
+ggplot(dataset, aes(x = "", y = salary)) +
+  geom_boxplot()
 
 # Data summary + variance 
 
@@ -84,32 +101,79 @@ dataset$hours_per_week_binned <- cut(dataset$`hours-per-week`, breaks = c(0, 30,
 View(dataset)
 
 # histograms
-hist(dataset$age)
-hist(dataset$num_salary)
-hist(dataset$fnlwgt)
-hist(dataset$`education-num`)
-hist(dataset$`capital-gain`)
-hist(dataset$`capital-loss`)
-hist(dataset$`hours-per-week`)
+
+
+# Histogram of the age variable
+ggplot(dataset, aes(x = age)) +
+  geom_histogram()
+
+# Histogram of the num_salary variable where the 1 represents salary >=50k and 0 represents salary <50k
+ggplot(dataset, aes(x = num_salary)) +
+  geom_histogram()
+
+# Histogram of the hours-per-week variable
+ggplot(dataset, aes(x = `hours-per-week`)) +
+  geom_histogram()
+
+# Histogram of the fnlwgt variable
+ggplot(dataset, aes(x = fnlwgt)) +
+  geom_histogram()
+
+
+
+
 
 #  bar plots 
-barplot(table(dataset$workclass))
-barplot(table(dataset$education))
-barplot(table(dataset$`marital-status`))
-barplot(table(dataset$occupation))
-barplot(table(dataset$relationship))
-barplot(table(dataset$race))
-barplot(table(dataset$sex))
-barplot(table(dataset$`native-country`))
-barplot(table(dataset$salary))
+
+
+# Bar plot of the workclass variable
+ggplot(dataset, aes(x = workclass)) + geom_bar()
+
+# Bar plot of the education variable
+ggplot(dataset, aes(x = education)) + geom_bar()
+
+# Bar plot of the marital-status variable
+ggplot(dataset, aes(x = `marital-status`)) + geom_bar()
+
+# Bar plot of the occupation variable
+ggplot(dataset, aes(x = occupation)) + geom_bar()
+
+# Bar plot of the relationship variable
+ggplot(dataset, aes(x = relationship)) + geom_bar()
+
+# Bar plot of the sex variable
+ggplot(dataset, aes(x = sex)) +geom_bar()
+
+# Bar plot of the native-country variable
+ggplot(dataset, aes(x = `native-country`)) + geom_bar()
+
+# Bar plot of the salary variable
+ggplot(dataset, aes(x = salary)) + geom_bar()
+
 
 # box plot 
-boxplot(age~ salary, data = dataset)
-boxplot(`hours-per-week`~ salary, data = dataset)
+
+
+
+# Box plot of hours-per-week vs. salary
+ggplot(dataset, aes(x = salary, y = `hours-per-week`)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Salary and Hours per Week", x = "Salary", y = "Hours per Week")
+
+
+ggplot(dataset, aes(x = salary, y = age)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Age and Salary", x = "salary", y = "age")
+
+
+
 
 #scatter plot
 
 scatterplot3d(dataset$num_salary,dataset$age, dataset$`hours-per-week`)
+
+
+
 
 
 #pie chart for the salary attribute
@@ -119,6 +183,10 @@ precentages <- tab %>% prop.table() %>% round(3) * 100
 txt <- paste0(names(tab), '\n', precentages, '%') 
 pie(tab, labels=txt) 
 
+
+# Create a density plot for the age variable
+ggplot(dataset, aes(x = age)) +
+  geom_density()
 
 
 
@@ -172,29 +240,19 @@ print(dataset)
 ######################################
 
 #Call normalize funcrtion 
-dataset$capital-gain<-normalize(dataWithoutNormalization$capital-gain)
+dataset$`capital-gain`<-normalize(dataWithoutNormalization$`capital-gain`)
 print(dataset)
 
 #Call Z_normalize funcrtion 
-dataset$capital-gain<-Z_normalize(dataWithoutNormalization$capital-gain)
+dataset$`capital-gain`<-Z_normalize(dataWithoutNormalization$`capital-gain`)
 print(dataset)
 
 ######################################
 
 #Call normalize funcrtion 
-dataset$capital-loss<-normalize(dataWithoutNormalization$capital-loss)
+dataset$`capital-loss`<-normalize(dataWithoutNormalization$`capital-loss`)
 print(dataset)
 
 #Call Z_normalize funcrtion 
-dataset$capital-loss<-Z_normalize(dataWithoutNormalization$capital-loss)
+dataset$`capital-loss`<-Z_normalize(dataWithoutNormalization$`capital-loss`)
 print(dataset)
-
-
-
-
-
-
-
-
-
-
