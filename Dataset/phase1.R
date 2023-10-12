@@ -100,6 +100,18 @@ var(dataset$`hours-per-week`)
 dataset$hours_per_week_binned <- cut(dataset$`hours-per-week`, breaks = c(0, 30, 40, Inf), labels = c("Low", "Medium", "High"))
 View(dataset)
 
+
+
+
+dataset$workclass <-  as.integer(factor(dataset$workclass))
+dataset$marital.status <-  as.integer(factor(dataset$`marital-status`))
+dataset$occupation <-  as.integer(factor(dataset$occupation))
+dataset$relationship <-  as.integer(factor(dataset$workclass))
+dataset$race <-  as.integer(factor(dataset$race))
+dataset$sex <-  as.integer(factor(dataset$sex))
+dataset$native.country <-  as.integer(factor(dataset$`native-country`))
+View(dataset)
+
 # histograms
 
 

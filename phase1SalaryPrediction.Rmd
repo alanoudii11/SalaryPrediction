@@ -19,13 +19,26 @@ library(outliers)
 library(scatterplot3d)
 library(dplyr)
 library(readr)
-dataset <- read_csv("GitHub/SalaryPrediction/Dataset/salary.csv")
+dataset <- read_csv("salary.csv")
+View(dataset)
 ```
 Sample of raw dataset and summary 
 ```{r}
 View(dataset)
 summary(dataset)
 ```
+encoding 
+```{r}
+dataset$workclass <-  as.integer(factor(dataset$workclass))
+dataset$marital.status <-  as.integer(factor(dataset$`marital-status`))
+dataset$occupation <-  as.integer(factor(dataset$occupation))
+dataset$relationship <-  as.integer(factor(dataset$workclass))
+dataset$race <-  as.integer(factor(dataset$race))
+dataset$sex <-  as.integer(factor(dataset$sex))
+dataset$native.country <-  as.integer(factor(dataset$`native-country`))
+print(dataset)
+```
+
  Missing values
 ```{r}
 sum(is.na(dataset))
@@ -253,3 +266,7 @@ print(dataset)
 
 ```
 
+
+```{r}
+
+```
