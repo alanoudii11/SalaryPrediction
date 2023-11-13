@@ -730,13 +730,15 @@ Classification uses supervised learning, meaning it uses labeled datasets to tra
   Upon using the confusion matrix and observing the accuracy of our models, we’ve noticed that all three showed a high accuracy. However, because our dataset is imbalanced, we will focus on the sensitivity and specificity to determine the performance of our models. 
 
 In the 60/40 model, not only was accuracy 98%, and the confusion matrix shows high accuracy, sensitivity, and specificity. 
+### loading libraries
 ```{r}
-install.packages("party",  repos = "https://cran.r-project.org")
+install.packages("party")
 library(party)
-install.packages("caret",  repos = "https://cran.r-project.org")
+install.packages("caret")
 library(caret)
-
-#evaluation: 60% training, 40% testing
+```
+##evaluation: 60% training, 40% testing
+```{r}
 
 sampleDataset=dataset[1:10000, ]
 set.seed(1234)
@@ -744,12 +746,21 @@ ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.6, 0.4))
 trainingData <- sampleDataset[ind == 1,]
 testingData <- sampleDataset[ind == 2,]
 
-myFormula <- num_salary ~ age + workclass + fnlwgt +'education-num' +'marital-status' + 'hours.per.week' + occupation + relationship + race + sex  + native-country
+myFormula <- num_salary ~ age + workclass + fnlwgt +`education-num` +`marital-status` + `hours-per-week` + occupation + relationship + race + sex  + `native-country`
 salary_Tree <- ctree(myFormula, data = trainingData)
 plot(salary_Tree, type = "simple")
-plot(salary_Tree)
-print(salary_Tree)
 
+```
+```{r}
+plot(salary_Tree)
+
+```
+```{r}
+print(salary_Tree)
+```
+
+
+```{r}
 # Convert the response variable to a factor
 testingData$num_salary <- as.factor(testingData$num_salary)
 
@@ -762,9 +773,7 @@ testPrediction <- factor(testPrediction, levels = levels(testingData$num_salary)
 # Create Confusion Matrix
 results <- confusionMatrix(as.factor(testPrediction), testingData$num_salary)
 print(results)
-
 ```
-
 
 The 70/30 model, much like the 60/40, gave us a high accuracy of 98%. Like the previous model, it performs well, giving us high accuracy, sensitivity, and specificity. 
 ```{r}
@@ -776,12 +785,22 @@ ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.7, 0.3))
 trainingData <- sampleDataset[ind == 1,]
 testingData <- sampleDataset[ind == 2,]
 
-myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex  + native.country
+myFormula <- num_salary ~ age + workclass + fnlwgt +`education-num` +`marital-status` + `hours-per-week` + occupation + relationship + race + sex  + `native-country`
 salary_Tree <- ctree(myFormula, data = trainingData)
 
 plot(salary_Tree, type = "simple")
+
+
+```
+```{r}
 plot(salary_Tree)
+```
+```{r}
 print(salary_Tree)
+
+```
+```{r}
+
 
 # Convert the response variable to a factor
 testingData$num_salary <- as.factor(testingData$num_salary)
@@ -795,8 +814,6 @@ testPrediction <- factor(testPrediction, levels = levels(testingData$num_salary)
 # Create Confusion Matrix
 results <- confusionMatrix(as.factor(testPrediction), testingData$num_salary)
 print(results)
-
-
 ```
 
 
@@ -812,13 +829,20 @@ ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.8, 0.2))
 trainingData <- sampleDataset[ind == 1,]
 testingData <- sampleDataset[ind == 2,]
 
-myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex + native.country
+myFormula <- num_salary ~ age + workclass + fnlwgt +`education-num` +`marital-status` + `hours-per-week` + occupation + relationship + race + sex  + `native-country`
 salary_Tree <- ctree(myFormula, data = trainingData)
 
 plot(salary_Tree, type = "simple")
-plot(salary_Tree)
-print(salary_Tree)
 
+```
+```{r}
+plot(salary_Tree)
+
+```
+```{r}
+print(salary_Tree)
+```
+```{r}
 # Convert the response variable to a factor
 testingData$num_salary <- as.factor(testingData$num_salary)
 
@@ -831,8 +855,6 @@ testPrediction <- factor(testPrediction, levels = levels(testingData$num_salary)
 # Create Confusion Matrix
 results <- confusionMatrix(as.factor(testPrediction), testingData$num_salary)
 print(results)
-
-
 ```
 
 
@@ -856,7 +878,7 @@ library(rpart.plot)
 dataset <- subset(dataset, select = -salary)
 dataset <- subset(dataset, select = -num_salary)
 
-View(dataset.salary)
+print(dataset$salary)
 
 dataset.salary$over50K = as.factor(dataset$over50K)
 class(dataset.salary$over50K)
