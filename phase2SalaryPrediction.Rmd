@@ -1,64 +1,58 @@
 ---
-title: "R Notebook"
+title: "Data Mining Phase 2"
 output:
   html_document:
-    df_print: paged
+    keep_md: yes
+  pdf_document: default
+  word_document: default
 ---
+
+  First and foremost, we will remove a few of our columns. We will remove education, capital.gain, and capital.loss. Education to avoid redundancy, as we believe education.num is adequate on its own. We will remove capital.loss and capital.gain due to low variance, with overwhelming majority of rows being zero.
+
+
+```{r}
+dataset=read.csv('salary.csv')
+dataset<- dataset[-c(4, 11,12)]
+```
+
+
 Installing the packages:
 ```{r}
-install.packages("outliers")
-install.packages("scatterplot3d") 
-install.packages("dplyr")
-install.packages("ggplot2")
-install.packages("colorspace")
+
+install.packages("outliers", repos = "https://cran.r-project.org")
+install.packages("scatterplot3d", repos = "https://cran.r-project.org") 
+install.packages("dplyr", repos = "https://cran.r-project.org")
+install.packages("ggplot2",  repos = "https://cran.r-project.org")
+install.packages("colorspace",  repos = "https://cran.r-project.org") 
 
 ```
 
-# Reading libraries 
+#Reading libraries and the dataset
 ```{r}
 library(ggplot2)
 library(outliers)
 library(scatterplot3d)
 library(dplyr)
 library(readr)
-
+View(dataset)
 ```
- 
-
-
-## load the data
-```{r}
-dataset <- read_csv("salary.csv")
-
-```
-
-
-
 1- General information about the Dataset
-
+ 
 #Sample of raw dataset and summary 
 ```{r}
 head(dataset)
 summary(dataset)
 ```
-
-First and foremost, we will remove a few of our columns. We will remove education, capital.gain, and capital.loss. Education to avoid redundancy, as we believe education.num is adequate on its own. We will remove capital.loss and capital.gain due to low variance, with overwhelming majority of rows being zero.
-```{r}
-dataset<- dataset[-c(4, 11,12)]
-print(dataset)
-```
-
-
 #Encoding the data: 
   The reason we performed encoding on our dataset is because it not only preserves the integrity of our data, but also because machine learning algorithms work with numerical values. 
 ```{r}
 dataset$workclass <-  as.integer(factor(dataset$workclass))
-dataset$`marital-status` <-  as.integer(factor(dataset$`marital-status`))
+dataset$marital.status <-  as.integer(factor(dataset$marital.status))
 dataset$occupation <-  as.integer(factor(dataset$occupation))
 dataset$relationship <-  as.integer(factor(dataset$workclass))
 dataset$race <-  as.integer(factor(dataset$race))
 dataset$sex <-  as.integer(factor(dataset$sex))
-dataset$`native-country` <-  as.integer(factor(dataset$`native-country`))
+dataset$native.country <-  as.integer(factor(dataset$native.country))
 print(dataset)
 ```
 
@@ -74,7 +68,6 @@ sum(is.na(dataset))
 ```
   We noticed that there is a question mark in some values although we checked the missing values in previous part and the resault was 0 so we are going to clean them by deleting the row
 ```{r}
-dataset <- dataset[!apply(dataset == "?", 1, any), ]
 dataset <- na.omit(dataset)
 print(dataset)
 ```
@@ -94,13 +87,13 @@ sum(Outfnlwgt)
 Find_outlier = which(Outfnlwgt ==TRUE, arr.ind = TRUE)
 
 ###
-Outeducation = outlier(dataset$`education-num`, logical =TRUE)
+Outeducation = outlier(dataset$education.num, logical =TRUE)
 sum(Outeducation)
 Find_outlier = which(Outeducation ==TRUE, arr.ind = TRUE)
 
 ##
 
-Outhours = outlier(dataset$`hours-per-week`, logical =TRUE)
+Outhours = outlier(dataset$hours.per.week, logical =TRUE)
 sum(Outhours)
 Find_outlier = which(Outhours ==TRUE, arr.ind = TRUE)
 
@@ -117,7 +110,7 @@ print(dataset)
 
 Create a new column called num_salary to transform the binary attribute into numerical to use it better as it it the class label
 ```{r}
-dataset$num_salary <- ifelse(dataset$salary == ">50K", 1, 0)
+dataset$num_salary <- as.integer(factor(dataset$salary))
 
 ```
 
@@ -130,7 +123,7 @@ Normalize attributes: age, fnlwgt
 
 ```{r}
 dataWithoutNormalization <- dataset
-
+print(dataWithoutNormalization)
 #Define function normalize().
 normalize <- function(x) {return ((x - min(x)) / (max(x) - min(x)))}
 #Define function Z_normalize().
@@ -138,22 +131,21 @@ Z_normalize <- function(x) {return ((x - mean(x)) / sd(x))}
 
 #Call normalize funcrtion 
 dataset$age<-normalize(dataWithoutNormalization$age)
-
+print(dataset)
 
 #Call Z_normalize funcrtion 
 dataset$age<-Z_normalize(dataWithoutNormalization$age)
-
+print(dataset)
 
 ######################################
 
 #Call normalize funcrtion 
 dataset$fnlwgt<-normalize(dataWithoutNormalization$fnlwgt)
-
+print(dataset)
 
 #Call Z_normalize funcrtion 
 dataset$fnlwgt<-Z_normalize(dataWithoutNormalization$fnlwgt)
-
-print(dataset) # data after normalization
+print(dataset)
 
 
 
@@ -189,7 +181,7 @@ names(dataset)
   *Provide a summary of the Data 
 ```{r}
 summary(dataset$age)
-summary(dataset$`hours-per-week`)
+summary(dataset$hours.per.week)
 summary(dataset$occupation)
 summary(dataset$sex)
 summary(dataset$salary)
@@ -197,7 +189,7 @@ summary(dataset$salary)
   *Show the variance of age and hours.per.week
 ```{r}
 var(dataset$age)
-var(dataset$`hours-per-week`)
+var(dataset$hours.per.week)
 ```
 
 Create a density plot for the age variable
@@ -206,64 +198,85 @@ ggplot(data = dataset, aes(x = age)) +
   geom_density()
 ```
 
-# Plotting:
+Plotting:
   *Histograms
-### Histogram of the age variable
+
 ```{r}
+# Histogram of the age variable
 ggplot(dataset, aes(x = age)) +
   geom_histogram()
+
 ```
-### Histogram of the num_salary variable where the 1 represents salary >=50k and 0 represents salary <50k
 ```{r}
+# Histogram of the num_salary variable where the 1 represents salary >=50k and 0 represents salary <50k
 ggplot(dataset, aes(x = num_salary)) +
   geom_histogram()
 
-```
-### Histogram of the hours-per-week variable
-```{r}
-ggplot(dataset, aes(x =`hours-per-week`)) +
-  geom_histogram()
 
 ```
-### Histogram of the fnlwgt variable
+ 
 ```{r}
+# Histogram of the hours-per-week variable
+ggplot(dataset, aes(x = hours.per.week)) +
+  geom_histogram()
+
+
+```
+
+```{r}
+# Histogram of the fnlwgt variable
 ggplot(dataset, aes(x = fnlwgt)) +
   geom_histogram()
 ```
 
+
   *Barplots
-### Bar plot of the workclass variable
 ```{r}
+# Bar plot of the workclass variable
 ggplot(dataset, aes(x = workclass)) + geom_bar()
 
 ```
-### Bar plot of the occupation variable
 ```{r}
+# Bar plot of the marital-status variable
+ggplot(dataset, aes(x = marital.status)) + geom_bar()
+```
+
+
+```{r}
+# Bar plot of the occupation variable
 ggplot(dataset, aes(x = occupation)) + geom_bar()
 ```
-### Bar plot of the relationship variable
+
+
 ```{r}
+# Bar plot of the relationship variable
 ggplot(dataset, aes(x = relationship)) + geom_bar()
+
 ```
-### Bar plot of the sex variable
+
 ```{r}
+# Bar plot of the sex variable
 ggplot(dataset, aes(x = sex)) +geom_bar()
+
 ```
-
-
-### Bar plot of the salary variable
 ```{r}
-ggplot(dataset, aes(x = salary)) + geom_bar()
+# Bar plot of the native-country variable
+ggplot(dataset, aes(x = native.country)) + geom_bar()
 
 ```
- 
+```{r}
+# Bar plot of the salary variable
+ggplot(dataset, aes(x = salary)) + geom_bar()
+```
+
+
   *Boxplots
 ```{r}
-ggplot(dataset, aes(x = salary, y = `hours-per-week`)) +
+ggplot(dataset, aes(x = salary, y = hours.per.week)) +
   geom_boxplot() +
   labs(title = "Box Plot of Salary and Hours per Week", x = "Salary", y = "Hours per Week")
-
 ```
+
 
 ```{r}
 ggplot(dataset, aes(x = salary, y = age)) +
@@ -271,9 +284,10 @@ ggplot(dataset, aes(x = salary, y = age)) +
   labs(title = "Box Plot of Age and Salary", x = "salary", y = "age")
 ```
 
+
   *Scatterplot
 ```{r}
-scatterplot3d(dataset$num_salary,dataset$age, dataset$`hours-per-week`)
+scatterplot3d(dataset$num_salary,dataset$age, dataset$hours.per.week)
 ```
 
 
@@ -290,12 +304,12 @@ pie(tab, labels=txt)
 First, we install the needed packages and libraries.
 
 ```{r}
-install.packages("dplyr")
-install.packages("tidyverse")
-install.packages("e1071")
-install.packages("cluster")
-install.packages("factoextra")
-install.packages("fpc")
+install.packages("dplyr",  repos = "https://cran.r-project.org")
+install.packages("tidyverse",  repos = "https://cran.r-project.org")
+install.packages("e1071",  repos = "https://cran.r-project.org")
+install.packages("cluster",  repos = "https://cran.r-project.org")
+install.packages("factoextra",  repos = "https://cran.r-project.org")
+install.packages("fpc",  repos = "https://cran.r-project.org")
 library(dplyr)
 library(tidyverse)
 library(e1071)
@@ -318,26 +332,36 @@ We will first start by deleting the class label, as clustering is an unsupervise
 
 ```{r}
 data_clustring <- subset(sampleDataset, select = -salary)
-data_clustring <- subset(data_clustring, select = -num_salary)
-print(data_clustring)
+data_clustring <- subset(sampleDataset, select = -num_salary)
+View(data_clustring)
 
 ```
 
-scaling the data
+Converting categorical attributes into numerical
 
 ```{r} 
-
-data_clustring <- scale(data_clustring)
+data_clustring$workclass <-  as.numeric(factor(data_clustring$workclass))
+data_clustring$fnlwgt <-  as.numeric(factor(data_clustring$fnlwgt))
+data_clustring$age <-  as.numeric(factor(data_clustring$age))
+data_clustring$education.num <-  as.numeric(factor(data_clustring$education.num))
+data_clustring$marital.status <-  as.numeric(factor(data_clustring$marital.status))
+data_clustring$occupation <-  as.numeric(factor(data_clustring$occupation))
+data_clustring$relationship <-  as.numeric(factor(data_clustring$relationship))
+data_clustring$race <-  as.numeric(factor(data_clustring$race))
+data_clustring$hours.per.week <-  as.numeric(factor(data_clustring$hours.per.week))
+data_clustring$sex <-  as.numeric(factor(data_clustring$sex))
+data_clustring$native.country <-  as.numeric(factor(data_clustring$native.country))
+data_clustring <- scale(data_clustring[, sapply(data_clustring, is.numeric)])
 
 ```
 
 
-#Data after preparing 
+#Data after preparing and converting categorical attributes into numeric values
 
 ```{r}
 summary(data_clustring)
 str(data_clustring)
-
+print(data_clustring)
 ```
 
   It is a good idea to experiment with different values of k to determine the best value for our dataset. By using various methods, such as the silhouette coefficient or the gap statistic, to evaluate the quality of different clustering solutions and select the one that best represents the underlying structure of the data.
@@ -375,7 +399,7 @@ The WCSS is a measure of the compactness of the clusters, and it represents the 
 ```{r}
 kmeans_model$tot.withinss
 ```
-Based on the graph and since Total within-cluster sum of square is 95968.12, the clusters appear to be well-defined and separated. The data points in each cluster are closely grouped together, and there is a clear gap between the two clusters. This suggests that the kmeans_model$tot.withinss value of 95967.99 is relatively low, indicating that the clusters are compact and well-separated.
+Based on the graph and since Total within-cluster sum of square is 95967.99, the clusters appear to be well-defined and separated. The data points in each cluster are closely grouped together, and there is a clear gap between the two clusters. This suggests that the kmeans_model$tot.withinss value of 95967.99 is relatively low, indicating that the clusters are compact and well-separated.
 
 
 
@@ -465,7 +489,7 @@ fviz_silhouette(avg_sil)
 kmeans_model$tot.withinss
 ```
 
-The kmeans_model$tot.withinss value of 86497.36 indicates that the two clusters are very compact and well-separated. The data points in each cluster are tightly grouped together, and there is a large gap between the two clusters. This suggests that the K-means clustering algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
+The kmeans_model$tot.withinss value of 86496.88 indicates that the two clusters are very compact and well-separated. The data points in each cluster are tightly grouped together, and there is a large gap between the two clusters. This suggests that the K-means clustering algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
 
 
 # Calculate BCubed precision and recall
@@ -554,7 +578,7 @@ fviz_silhouette(avg_sil)
 kmeans_model$tot.withinss
 ```
 
-Based on the graph provided, the kmeans_model$tot.withinss of 78835.45 indicates that the clusters are compact and well-separated. The data points in each cluster are tightly grouped together, and there is a clear gap between the two clusters. This is evident in the fact that the two clusters are clearly distinct in the plot, with little overlap between them.
+Based on the graph provided, the kmeans_model$tot.withinss of 78869.05 indicates that the clusters are compact and well-separated. The data points in each cluster are tightly grouped together, and there is a clear gap between the two clusters. This is evident in the fact that the two clusters are clearly distinct in the plot, with little overlap between them.
 
 
 # Calculate BCubed precision and recall
@@ -614,23 +638,23 @@ print(recall)
 
 K=2
 Average Silhouette Width: 0.23
-Total Within-Cluster Sum of Squares: 95968.12
+Total Within-Cluster Sum of Squares: 95967.99
 Precision: 0.637
 Recall: 0.7446
 
 
 K=3
 Average Silhouette Width: 0.14
-Total Within-Cluster Sum of Squares: 86497.36
+Total Within-Cluster Sum of Squares: 86496.88
 Precision: 0.6753
 Recall: 0.4412
 
 
 K=4
 Average Silhouette Width: 0.15
-Total Within-Cluster Sum of Squares: 78835.45
-Precision: 0.673
-Recall: 0.3950
+Total Within-Cluster Sum of Squares: 78869.05
+Precision: 0.6730
+Recall: 0.3937
 
 
 Analysis:
@@ -650,25 +674,25 @@ K=4 shows high precision but at the expense of lower recall, possibly due to the
 
 # Comparison of WCSS
 
-Clustering Result 1: kmeans_model$tot.withinss = 95968.12
+Clustering Result 1: kmeans_model$tot.withinss = 95967.99
 
 The clusters appear to be well-defined and separated in the graph.
-The WCSS value of 95968.12 is moderate, suggesting that the clusters are neither overly compact nor overly spread out.
+The WCSS value of 95967.99 is moderate, suggesting that the clusters are neither overly compact nor overly spread out.
 
-Clustering Result 2: kmeans_model$tot.withinss = 86497.36
+Clustering Result 2: kmeans_model$tot.withinss = 86496.88
 
 The clusters appear to be compact and well-separated in the graph.
-The WCSS value of 86497.36 is lower than the first clustering result, indicating that the clusters are more compact in this case.
+The WCSS value of 86496.88 is lower than the first clustering result, indicating that the clusters are more compact in this case.
 
-Clustering Result 3: kmeans_model$tot.withinss = 78835.45
+Clustering Result 3: kmeans_model$tot.withinss = 78869.05
 
 The clusters appear to be very compact and well-separated in the graph.
-The WCSS value of 78835.45 is the lowest of the three clustering results, indicating that the clusters are the most compact in this case.
+The WCSS value of 78869.05 is the lowest of the three clustering results, indicating that the clusters are the most compact in this case.
 
 
 Recommendation:
 
-Based on the WCSS values and the visual inspection of the clusters in the graphs, we would suggest that Clustering Result 3 (kmeans_model$tot.withinss = 78835.45) is the best of the three clustering solutions. The clusters in this result are the most compact and well-separated, and the WCSS value is significantly lower than the other two results. This suggests that the K-means algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
+Based on the WCSS values and the visual inspection of the clusters in the graphs, we would suggest that Clustering Result 3 (kmeans_model$tot.withinss = 78869.05) is the best of the three clustering solutions. The clusters in this result are the most compact and well-separated, and the WCSS value is significantly lower than the other two results. This suggests that the K-means algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
 
 
 
@@ -730,15 +754,18 @@ Classification uses supervised learning, meaning it uses labeled datasets to tra
   Upon using the confusion matrix and observing the accuracy of our models, we’ve noticed that all three showed a high accuracy. However, because our dataset is imbalanced, we will focus on the sensitivity and specificity to determine the performance of our models. 
 
 In the 60/40 model, not only was accuracy 98%, and the confusion matrix shows high accuracy, sensitivity, and specificity. 
-### loading libraries
 ```{r}
-install.packages("party")
+install.packages("party",  repos = "https://cran.r-project.org")
 library(party)
-install.packages("caret")
+install.packages("caret",  repos = "https://cran.r-project.org")
 library(caret)
+install.packages("ctree",  repos = "https://cran.r-project.org")
 ```
-##evaluation: 60% training, 40% testing
+
+
 ```{r}
+
+#evaluation: 60% training, 40% testing
 
 sampleDataset=dataset[1:10000, ]
 set.seed(1234)
@@ -746,21 +773,20 @@ ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.6, 0.4))
 trainingData <- sampleDataset[ind == 1,]
 testingData <- sampleDataset[ind == 2,]
 
-myFormula <- num_salary ~ age + workclass + fnlwgt +`education-num` +`marital-status` + `hours-per-week` + occupation + relationship + race + sex  + `native-country`
+myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex  + native.country
 salary_Tree <- ctree(myFormula, data = trainingData)
-plot(salary_Tree, type = "simple")
 
 ```
-```{r}
-plot(salary_Tree)
 
-```
 ```{r}
+
 print(salary_Tree)
+
 ```
 
 
 ```{r}
+
 # Convert the response variable to a factor
 testingData$num_salary <- as.factor(testingData$num_salary)
 
@@ -785,23 +811,19 @@ ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.7, 0.3))
 trainingData <- sampleDataset[ind == 1,]
 testingData <- sampleDataset[ind == 2,]
 
-myFormula <- num_salary ~ age + workclass + fnlwgt +`education-num` +`marital-status` + `hours-per-week` + occupation + relationship + race + sex  + `native-country`
+myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex  + native.country
 salary_Tree <- ctree(myFormula, data = trainingData)
 
 plot(salary_Tree, type = "simple")
 
+```
 
-```
-```{r}
-plot(salary_Tree)
-```
 ```{r}
 print(salary_Tree)
 
 ```
+
 ```{r}
-
-
 # Convert the response variable to a factor
 testingData$num_salary <- as.factor(testingData$num_salary)
 
@@ -829,19 +851,19 @@ ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.8, 0.2))
 trainingData <- sampleDataset[ind == 1,]
 testingData <- sampleDataset[ind == 2,]
 
-myFormula <- num_salary ~ age + workclass + fnlwgt +`education-num` +`marital-status` + `hours-per-week` + occupation + relationship + race + sex  + `native-country`
+myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex + native.country
 salary_Tree <- ctree(myFormula, data = trainingData)
 
 plot(salary_Tree, type = "simple")
 
-```
-```{r}
-plot(salary_Tree)
+
 
 ```
 ```{r}
 print(salary_Tree)
+
 ```
+
 ```{r}
 # Convert the response variable to a factor
 testingData$num_salary <- as.factor(testingData$num_salary)
@@ -869,17 +891,28 @@ Ananlysis: While the accuracy for all our models are high, as mentioned before, 
 After setting the cp value to 0.5, we can see that our tree has only produced one node with no split. Because of this, the variable importance is NULL. The tree does not need to be pruned. 
 
 ```{r}
-over50K=ifelse(dataset$num_salary==1, "Yes", "No")
-dataset=data.frame(dataset, over50K)
+over50K=ifelse(dataset$num_salary==2, "Yes", "No")
+dataset<-data.frame(dataset, over50K)
 library(rpart)
 library(rpart.plot)
+```
+
+
+```{r}
+
 
 #Remove salary, num_salary
-dataset <- subset(dataset, select = -salary)
-dataset <- subset(dataset, select = -num_salary)
+dataset.salary <- subset(dataset, select = -salary)
+dataset.salary <- subset(dataset, select = -num_salary)
 
-print(dataset$salary)
+View(dataset.salary)
 
+
+
+```
+
+
+```{r}
 dataset.salary$over50K = as.factor(dataset$over50K)
 class(dataset.salary$over50K)
 
@@ -896,14 +929,15 @@ fit.tree = rpart(over50K ~ ., data=dataset.train, method = "class", cp=0.5)
 fit.tree
 rpart.plot(fit.tree)
 
+```
+
+```{r}
 # Checking the order of variable importance
 fit.tree$variable.importance
 pred.tree = predict(fit.tree, dataset.test, type = "class")
 table(pred.tree,over50K.test)
 #plotcp(fit.tree)
 printcp(fit.tree)
-
-
 ```
 
   After setting the cp to 0.01, the tree has a root and several terminal nodes. The most important variables in this tree is marital.status. We’ve noticed that even after pruning, the tree structure has not changed. And the accuracy snd sensitivity also did not change.
@@ -915,6 +949,9 @@ fit.tree = rpart(over50K ~ ., data=dataset.train, method = "class", cp=0.01)
 fit.tree
 rpart.plot(fit.tree)
 
+```
+
+```{r}
 # Checking the order of variable importance
 fit.tree$variable.importance
 pred.tree = predict(fit.tree, dataset.test, type = "class")
@@ -922,6 +959,9 @@ confMatBeforePruning=table(pred.tree,over50K.test)
 #plotcp(fit.tree)
 printcp(fit.tree)
 
+```
+
+```{r}
 #calculate accuracy:
 accuracy <- sum(diag(confMatBeforePruning))/sum(confMatBeforePruning)
 accuracy
@@ -932,12 +972,18 @@ fn <- confMatBeforePruning[2, 1]
 sensitivity <- tp / (tp + fn)
 sensitivity
 
+```
+
+```{r}
 # Explicitly request the lowest cp value
 fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
 bestcp <-fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
 pruned.tree <- prune(fit.tree, cp = bestcp)
 rpart.plot(pruned.tree)
 
+```
+
+```{r}
 # Alternate specification 
 pred.prune = predict(pruned.tree, dataset.test, type="class")
 confMatAfterPruning=table(pred.prune, over50K.test)
@@ -963,6 +1009,10 @@ fit.tree = rpart(over50K ~ ., data=dataset.train, method = "class", cp=0.0008)
 fit.tree
 rpart.plot(fit.tree)
 
+
+```
+
+```{r}
 # Checking the order of variable importance
 fit.tree$variable.importance
 pred.tree = predict(fit.tree, dataset.test, type = "class")
@@ -970,6 +1020,9 @@ confMatBeforePruning=table(pred.tree,over50K.test)
 #plotcp(fit.tree)
 printcp(fit.tree)
 
+```
+
+```{r}
 #calculate accuracy:
 accuracy <- sum(diag(confMatBeforePruning))/sum(confMatBeforePruning)
 accuracy
@@ -980,12 +1033,18 @@ fn <- confMatBeforePruning[2, 1]
 sensitivity <- tp / (tp + fn)
 sensitivity
 
+```
+
+```{r}
 # Explicitly request the lowest cp value
 fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
 bestcp <-fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
 pruned.tree <- prune(fit.tree, cp = bestcp)
 rpart.plot(pruned.tree)
 
+```
+
+```{r}
 # Alternate specification 
 pred.prune = predict(pruned.tree, dataset.test, type="class")
 confMatAfterPruning=table(pred.prune, over50K.test)
@@ -1001,8 +1060,6 @@ sensitivity <- tp / (tp + fn)
 sensitivity
 ```
 
-
-
   *C4.5 Algorithm
   k-folds affect bias and variance of a model’s performance. The higher the folds are, the higher the bias and lower the variance. We will be testing 3, 5, and 10 folds and evaluating the performance of each one. 
 
@@ -1013,9 +1070,9 @@ sensitivity
 library(RWeka)
 install.packages("partykit",  repos = "https://cran.r-project.org")
 
-#Note: Remove num_salary & over50K first
-dataset <- subset(dataset, select = -salary)
+#Note: Remove over50K first
 dataset <- subset(dataset, select = -over50K)
+dataset <- subset(dataset, select = -num_salary)
 
 sampleDataset <- dataset[1:10000, ]
 set.seed(1234)
@@ -1030,6 +1087,8 @@ final_model <- C45Fit$finalModel
 plot(final_model)
 
 
+```
+```{r}
 predictions <- predict(final_model, newdata = sampleDataset)
 
 predictions<-as.factor(predictions)
@@ -1056,6 +1115,9 @@ C45Fit <- train(salary ~ ., method = "J48", data = sampleDataset,
 final_model <- C45Fit$finalModel
 plot(final_model)
 
+```
+
+```{r}
 predictions <- predict(final_model, newdata = sampleDataset)
 
 predictions<-as.factor(predictions)
@@ -1067,7 +1129,6 @@ conf_matrix <- confusionMatrix(predictions, sampleDataset$salary)
 # Print the confusion matrix
 print(conf_matrix)
 ```
-
 
 
 The 10-fold training set had similar results, but with the highest sensitivity out of the three models. 
@@ -1083,6 +1144,11 @@ C45Fit <- train(salary ~ ., method = "J48", data = sampleDataset,
 final_model <- C45Fit$finalModel
 plot(final_model)
 
+
+
+```
+
+```{r}
 predictions <- predict(final_model, newdata = sampleDataset)
 
 predictions<-as.factor(predictions)
@@ -1093,8 +1159,6 @@ conf_matrix <- confusionMatrix(predictions, sampleDataset$salary)
 
 # Print the confusion matrix
 print(conf_matrix)
-
-
 ```
 
 Conclusion: Overall, while all three algorithms had a high accuracy, if we take into account the sensitivity and specificity, we can see that the best performing algorithm was the ID3 algorithm.
