@@ -399,7 +399,7 @@ The WCSS is a measure of the compactness of the clusters, and it represents the 
 ```{r}
 kmeans_model$tot.withinss
 ```
-Based on the graph and since Total within-cluster sum of square is 95967.99, the clusters appear to be well-defined and separated. The data points in each cluster are closely grouped together, and there is a clear gap between the two clusters. This suggests that the kmeans_model$tot.withinss value of 95967.99 is relatively low, indicating that the clusters are compact and well-separated.
+Based on the graph and since Total within-cluster sum of square is 95964.09, the clusters appear to be well-defined and separated. The data points in each cluster are closely grouped together, and there is a clear gap between the two clusters. This suggests that the kmeans_model$tot.withinss value of 95967.99 is relatively low, indicating that the clusters are compact and well-separated.
 
 
 
@@ -489,7 +489,7 @@ fviz_silhouette(avg_sil)
 kmeans_model$tot.withinss
 ```
 
-The kmeans_model$tot.withinss value of 86496.88 indicates that the two clusters are very compact and well-separated. The data points in each cluster are tightly grouped together, and there is a large gap between the two clusters. This suggests that the K-means clustering algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
+The kmeans_model$tot.withinss value of 86459.06 indicates that the two clusters are very compact and well-separated. The data points in each cluster are tightly grouped together, and there is a large gap between the two clusters. This suggests that the K-means clustering algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
 
 
 # Calculate BCubed precision and recall
@@ -578,7 +578,7 @@ fviz_silhouette(avg_sil)
 kmeans_model$tot.withinss
 ```
 
-Based on the graph provided, the kmeans_model$tot.withinss of 78869.05 indicates that the clusters are compact and well-separated. The data points in each cluster are tightly grouped together, and there is a clear gap between the two clusters. This is evident in the fact that the two clusters are clearly distinct in the plot, with little overlap between them.
+Based on the graph provided, the kmeans_model$tot.withinss of 78834.16 indicates that the clusters are compact and well-separated. The data points in each cluster are tightly grouped together, and there is a clear gap between the two clusters. This is evident in the fact that the two clusters are clearly distinct in the plot, with little overlap between them.
 
 
 # Calculate BCubed precision and recall
@@ -637,29 +637,29 @@ print(recall)
 
 
 K=2
-Average Silhouette Width: 0.23
-Total Within-Cluster Sum of Squares: 95967.99
+Average Silhouette Width: 0.22
+Total Within-Cluster Sum of Squares: 95964
 Precision: 0.637
 Recall: 0.7446
 
 
 K=3
-Average Silhouette Width: 0.14
-Total Within-Cluster Sum of Squares: 86496.88
+Average Silhouette Width: 0.13
+Total Within-Cluster Sum of Squares: 86449
 Precision: 0.6753
-Recall: 0.4412
+Recall: 0.4416
 
 
 K=4
-Average Silhouette Width: 0.15
-Total Within-Cluster Sum of Squares: 78869.05
-Precision: 0.6730
-Recall: 0.3937
+Average Silhouette Width: 0.14
+Total Within-Cluster Sum of Squares: 78834
+Precision: 0.6727
+Recall: 0.3936
 
 
 Analysis:
 
-Average Silhouette Width: K=2 shows the highest silhouette width (0.23), indicating better-defined clusters in comparison to K=3 and K=4.
+Average Silhouette Width: K=2 shows the highest silhouette width (0.22), indicating better-defined clusters in comparison to K=3 and K=4.
 Total Within-Cluster Sum of Squares: As the number of clusters increases, the total within-cluster sum of squares decreases, suggesting better compactness or tighter clustering.
 
 Precision and Recall: While precision remains relatively consistent, recall shows a decline as the number of clusters increases. This suggests a trade-off between precision and recall, where a higher number of clusters might lead to better precision but lower recall due to more fragmented or smaller clusters.
@@ -674,25 +674,25 @@ K=4 shows high precision but at the expense of lower recall, possibly due to the
 
 # Comparison of WCSS
 
-Clustering Result 1: kmeans_model$tot.withinss = 95967.99
+Clustering Result 1: kmeans_model$tot.withinss = 95964
 
 The clusters appear to be well-defined and separated in the graph.
-The WCSS value of 95967.99 is moderate, suggesting that the clusters are neither overly compact nor overly spread out.
+The WCSS value of 95964 is moderate, suggesting that the clusters are neither overly compact nor overly spread out.
 
-Clustering Result 2: kmeans_model$tot.withinss = 86496.88
+Clustering Result 2: kmeans_model$tot.withinss = 86459
 
 The clusters appear to be compact and well-separated in the graph.
-The WCSS value of 86496.88 is lower than the first clustering result, indicating that the clusters are more compact in this case.
+The WCSS value of 86459 is lower than the first clustering result, indicating that the clusters are more compact in this case.
 
-Clustering Result 3: kmeans_model$tot.withinss = 78869.05
+Clustering Result 3: kmeans_model$tot.withinss = 78834
 
 The clusters appear to be very compact and well-separated in the graph.
-The WCSS value of 78869.05 is the lowest of the three clustering results, indicating that the clusters are the most compact in this case.
+The WCSS value of 78834 is the lowest of the three clustering results, indicating that the clusters are the most compact in this case.
 
 
 Recommendation:
 
-Based on the WCSS values and the visual inspection of the clusters in the graphs, we would suggest that Clustering Result 3 (kmeans_model$tot.withinss = 78869.05) is the best of the three clustering solutions. The clusters in this result are the most compact and well-separated, and the WCSS value is significantly lower than the other two results. This suggests that the K-means algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
+Based on the WCSS values and the visual inspection of the clusters in the graphs, we would suggest that Clustering Result 3 (kmeans_model$tot.withinss = 78834) is the best of the three clustering solutions. The clusters in this result are the most compact and well-separated, and the WCSS value is significantly lower than the other two results. This suggests that the K-means algorithm has effectively captured the underlying structure of the data and produced two meaningful clusters.
 
 
 
@@ -899,11 +899,9 @@ library(rpart.plot)
 
 
 ```{r}
-
-
 #Remove salary, num_salary
-dataset.salary <- subset(dataset, select = -salary)
-dataset.salary <- subset(dataset, select = -num_salary)
+
+dataset.salary <- subset(dataset, select = -c(salary, num_salary))
 
 View(dataset.salary)
 
@@ -1070,9 +1068,8 @@ sensitivity
 library(RWeka)
 install.packages("partykit",  repos = "https://cran.r-project.org")
 
-#Note: Remove over50K first
-dataset <- subset(dataset, select = -over50K)
-dataset <- subset(dataset, select = -num_salary)
+#Note: Remove over50K & num_salary first
+dataset <- subset(dataset, select = -c(over50K, num_salary))
 
 sampleDataset <- dataset[1:10000, ]
 set.seed(1234)
