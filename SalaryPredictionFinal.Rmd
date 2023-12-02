@@ -19,22 +19,7 @@ an individual's earning potential. Our aim in this project is to develop
 a robust and precise salary prediction model based on various features
 such as education level, workclass, occupation, and so on.
 
-# Goal of Collecting this Dataset
-
-The goal of our dataset is to predict whether or not the yearly salary
-exceeds \$50,000 and cluster individuals based on their salaries. Salary
-is a great source of motivation for employees, and as a result, we
-believe that salary prediction and clustering can be helpful to both
-employees and their employers, as it can roughly calculate the expected
-salaries, identify salary trends, and the relationship between salaries
-and various factors. This information can be helpful to both employees
-and employers in negotiating for a fair salary, making better hiring
-decisions, and identifying areas for improvement.
-
-## Source of the Dataset
-
-The dataset was obtained from Kaggle.
-<https://www.kaggle.com/datasets/ayessa/salary-prediction-classification>
+# 
 
 # Data Mining Task
 
@@ -59,6 +44,23 @@ that can accurately predict the salary of an employee.
 
 # Data
 
+## Goal of Collecting this Dataset
+
+The goal of our dataset is to predict whether or not the yearly salary
+exceeds \$50,000 and cluster individuals based on their salaries. Salary
+is a great source of motivation for employees, and as a result, we
+believe that salary prediction and clustering can be helpful to both
+employees and their employers, as it can roughly calculate the expected
+salaries, identify salary trends, and the relationship between salaries
+and various factors. This information can be helpful to both employees
+and employers in negotiating for a fair salary, making better hiring
+decisions, and identifying areas for improvement.
+
+## Source of the Dataset
+
+The dataset was obtained from Kaggle.
+<https://www.kaggle.com/datasets/ayessa/salary-prediction-classification>
+
 ## General information:
 
 Our dataset contains 15 attributes and 32,561 objects. The class label
@@ -73,138 +75,59 @@ modeling tasks, such as classification.
 
 Our attributes are the following:
 
-+----------+----------+----------+
-| -   \    | -   \    | **D e s  |
-|     \*   |     \*   | c        |
-|          |          | r        |
-| A        | A        | iption** |
-| ttribute | ttribute |          |
-|          |          |          |
-| name\*\* | type\*\* |          |
-+==========+==========+==========+
-| Age      | integer  | The      |
-|          |          | person's |
-|          |          | age in   |
-|          |          | years.   |
-+----------+----------+----------+
-| w        | c a      | R        |
-| orkclass | t        | e        |
-|          | egorical | presents |
-|          |          | the e    |
-|          |          | m        |
-|          |          | ployment |
-|          |          | status.  |
-+----------+----------+----------+
-| fnlwgt   | integer  | The      |
-|          |          | final    |
-|          |          | weight   |
-|          |          | of how   |
-|          |          | much of  |
-|          |          | the p    |
-|          |          | o        |
-|          |          | pulation |
-|          |          | it r e   |
-|          |          | p        |
-|          |          | resents. |
-+----------+----------+----------+
-| e        | c a      | Highest  |
-| ducation | t        | level of |
-|          | egorical | e        |
-|          |          | d        |
-|          |          | ucation. |
-+----------+----------+----------+
-| ed u c   | integer  | Highest  |
-| a        |          | level of |
-| tion-num |          | e        |
-|          |          | ducation |
-|          |          | in       |
-|          |          | n        |
-|          |          | umerical |
-|          |          | form.    |
-+----------+----------+----------+
-| mar i t  | c a      | R        |
-| a        | t        | e        |
-| l-status | egorical | presents |
-|          |          | the      |
-|          |          | marital  |
-|          |          | status.  |
-+----------+----------+----------+
-| o        | c a      | R        |
-| c        | t        | e        |
-| cupation | egorical | presents |
-|          |          | the o    |
-|          |          | c        |
-|          |          | cupation |
-|          |          | of the i |
-|          |          | n        |
-|          |          | d        |
-|          |          | ividual. |
-+----------+----------+----------+
-| r e l    | c a      | R        |
-| a        | t        | e        |
-| tionship | egorical | presents |
-|          |          | the r e  |
-|          |          | l        |
-|          |          | a        |
-|          |          | tionship |
-|          |          | status.  |
-+----------+----------+----------+
-| race     | c a      | R        |
-|          | t        | e        |
-|          | egorical | presents |
-|          |          | the      |
-|          |          | person's |
-|          |          | race.    |
-+----------+----------+----------+
-| sex      | binary   | The      |
-|          |          | person's |
-|          |          | gender.  |
-+----------+----------+----------+
-| c a p    | integer  | R        |
-| i        |          | e        |
-| tal-gain |          | presents |
-|          |          | the      |
-|          |          | capital  |
-|          |          | gain.    |
-+----------+----------+----------+
-| c a p    | integer  | R        |
-| i        |          | e        |
-| tal-loss |          | presents |
-|          |          | the      |
-|          |          | capital  |
-|          |          | loss.    |
-+----------+----------+----------+
-| hou r s  | c        | R        |
-| .        | o        | e        |
-| per.week | ntinuous | presents |
-|          |          | the      |
-|          |          | hours    |
-|          |          | the      |
-|          |          | person   |
-|          |          | works    |
-|          |          | per      |
-|          |          | week.    |
-+----------+----------+----------+
-| nat i v  | c a      | The      |
-| e        | t        | person's |
-| -country | egorical | country. |
-+----------+----------+----------+
-| salary   | binary   | The      |
-|          |          | class    |
-|          |          | label;   |
-|          |          | it       |
-|          |          | i        |
-|          |          | ndicates |
-|          |          | whether  |
-|          |          | the      |
-|          |          | person   |
-|          |          | makes    |
-|          |          | more or  |
-|          |          | less     |
-|          |          | than     |
-|          |          | \        |
-|          |          | $50,000. |
-+----------+----------+----------+
++----------------------+-----------------+-------------------------+
+| Attribute name       | Attribute type  | **Description**         |
++======================+=================+=========================+
+| Age                  | integer         | The person's age in     |
+|                      |                 | years.                  |
++----------------------+-----------------+-------------------------+
+| workclass            | categorical     | Represents the          |
+|                      |                 | employment status.      |
++----------------------+-----------------+-------------------------+
+| fnlwgt               | integer         | The final weight of how |
+|                      |                 | much of the population  |
+|                      |                 | it represents.          |
++----------------------+-----------------+-------------------------+
+| education            | categorical     | Highest level of        |
+|                      |                 | education.              |
++----------------------+-----------------+-------------------------+
+| education-num        | integer         | Highest level of        |
+|                      |                 | education in numerical  |
+|                      |                 | form.                   |
++----------------------+-----------------+-------------------------+
+| marital-status       | categorical     | Represents the marital  |
+|                      |                 | status.                 |
++----------------------+-----------------+-------------------------+
+| occupation           | categorical     | Represents the          |
+|                      |                 | occupation of the       |
+|                      |                 | individual.             |
++----------------------+-----------------+-------------------------+
+| relationship         | categorical     | Represents the          |
+|                      |                 | relationship status.    |
++----------------------+-----------------+-------------------------+
+| race                 | categorical     | Represents the person's |
+|                      |                 | race.                   |
++----------------------+-----------------+-------------------------+
+| sex                  | binary          | The person's gender.    |
++----------------------+-----------------+-------------------------+
+| capital-gain         | integer         | Represents the capital  |
+|                      |                 | gain.                   |
++----------------------+-----------------+-------------------------+
+| capital-loss         | integer         | Represents the capital  |
+|                      |                 | loss.                   |
++----------------------+-----------------+-------------------------+
+| hours . per.week     | continuous      | Represents the hours    |
+|                      |                 | the person works per    |
+|                      |                 | week.                   |
++----------------------+-----------------+-------------------------+
+| native -country      | categorical     | The person's country.   |
++----------------------+-----------------+-------------------------+
+| salary               | binary          | The class label; it     |
+|                      |                 | indicates whether the   |
+|                      |                 | person makes more or    |
+|                      |                 | less than\              |
+|                      |                 | \$50,000.               |
++----------------------+-----------------+-------------------------+
 
 ### Call the dataset
 
@@ -1097,28 +1020,31 @@ print(recall)
 
 ### Evaluation and Comparison: Clustering
 
-+------------+---------------+-------------------+---------------+
-|            | K=2           | K=3               | K=4           |
-+============+===============+===================+===============+
-| Average    | 0.16          | 0.18              | 0.17          |
-| Sillouette |               |                   |               |
-| width      |               |                   |               |
-+------------+---------------+-------------------+---------------+
-| Total w i  | 94215.99      | 86246.29          | 79699.02      |
-| t h        |               |                   |               |
-| in-cluster |               |                   |               |
-| sum of     |               |                   |               |
-| square     |               |                   |               |
-+------------+---------------+-------------------+---------------+
-| BCubed     | 0.6728333     | 0.670029          | 0.6884835     |
-| Precision  |               |                   |               |
-+------------+---------------+-------------------+---------------+
-| BCubed     | 0.5575594     | 0.4975389         | 0.4061215     |
-| Recall     |               |                   |               |
-+------------+---------------+-------------------+---------------+
-| V i s      | ![](imag      | ![](              | ![](imag      |
-| ualization | es/k2-02.png) | images/k3-01.png) | es/k4-01.png) |
-+------------+---------------+-------------------+---------------+
++--------------+--------------+----------------+--------------+
+|              | K=2          | K=3            | K=4          |
++==============+==============+================+==============+
+| Average      | 0.16         | 0.18           | 0.17         |
+| Sillouette   |              |                |              |
+| width        |              |                |              |
++--------------+--------------+----------------+--------------+
+| Total        | 94215.99     | 86246.29       | 79699.02     |
+| wi           |              |                |              |
+| thin-cluster |              |                |              |
+| sum of       |              |                |              |
+| square       |              |                |              |
++--------------+--------------+----------------+--------------+
+| BCubed       | 0.6728333    | 0.670029       | 0.6884835    |
+| Precision    |              |                |              |
++--------------+--------------+----------------+--------------+
+| BCubed       | 0.5575594    | 0.4975389      | 0.4061215    |
+| Recall       |              |                |              |
++--------------+--------------+----------------+--------------+
+| V            | ![](image    | ![](ima        | ![](image    |
+| isualization | s/k2-03.png) | ges/k3-01.png) | s/k4-02.png) |
+|              | {width="137" |                | {width="134" |
+|              | h            |                | h            |
+|              | eight="118"} |                | eight="122"} |
++--------------+--------------+----------------+--------------+
 
 #### Analysis:
 
@@ -2097,22 +2023,22 @@ consistently shows high accuracy, sensitivity, and precision.
 
 **ID3 Algorithm Evaluation:**
 
-+------------+------------+------------+------------+
-|            | 80%        | 70%        | 60%        |
-|            | Training,  | Training,  | Training,  |
-|            | 20%        | 30%        | 40%        |
-|            | Testing    | Testing    | Testing    |
-+============+============+============+============+
-| Accuracy   | 82         | 82         | 82         |
-+------------+------------+------------+------------+
-| Precision  | 83         | 87         | 85         |
-+------------+------------+------------+------------+
-| Se         | 96         | 91         | 93         |
-| nsitivity  |            |            |            |
-+------------+------------+------------+------------+
-| Sp         | 37         | 55         | 45         |
-| ecificity  |            |            |            |
-+------------+------------+------------+------------+
++-----------+-----------+-----------+-----------+
+|           | 80%       | 70%       | 60%       |
+|           | Training, | Training, | Training, |
+|           | 20%       | 30%       | 40%       |
+|           | Testing   | Testing   | Testing   |
++===========+===========+===========+===========+
+| Accuracy  | 82        | 82        | 82        |
++-----------+-----------+-----------+-----------+
+| Precision | 83        | 87        | 85        |
++-----------+-----------+-----------+-----------+
+| Se        | 96        | 91        | 93        |
+| nsitivity |           |           |           |
++-----------+-----------+-----------+-----------+
+| Sp        | 37        | 55        | 45        |
+| ecificity |           |           |           |
++-----------+-----------+-----------+-----------+
 
 #### Analysis
 
@@ -2142,26 +2068,27 @@ specificity across different training-testing splits.
 
 **CART Algorithm Evaluation:**
 
-+-----------+-----------+-----------+-----------+
-|           | cp = 0.1  | cp = 0.01 | cp = 0 .  |
-|           |           |           | 0008      |
-|           |           |           |           |
-|           |           |           | Before/   |
-|           |           |           | After     |
-|           |           |           | Pruning   |
-+===========+===========+===========+===========+
-| Accuracy  | 81        | 82        | 82/83     |
-+-----------+-----------+-----------+-----------+
-| Precision | 37        | 41        | 53/52     |
-+-----------+-----------+-----------+-----------+
-| S         | 73        | 74        | 66/70     |
-| e         |           |           |           |
-| nsitivity |           |           |           |
-+-----------+-----------+-----------+-----------+
-| S         | 83        | 84        | 86/86     |
-| p         |           |           |           |
-| ecificity |           |           |           |
-+-----------+-----------+-----------+-----------+
++----------+----------+----------+----------+
+|          | cp = 0.1 | cp =     | cp = 0 . |
+|          |          | 0.01     | 0008     |
+|          |          |          |          |
+|          |          |          | Before/  |
+|          |          |          | After    |
+|          |          |          | Pruning  |
++==========+==========+==========+==========+
+| Accuracy | 81       | 82       | 82/83    |
++----------+----------+----------+----------+
+| P        | 37       | 41       | 53/52    |
+| recision |          |          |          |
++----------+----------+----------+----------+
+| S e      | 73       | 74       | 66/70    |
+| n        |          |          |          |
+| sitivity |          |          |          |
++----------+----------+----------+----------+
+| S p      | 83       | 84       | 86/86    |
+| e        |          |          |          |
+| cificity |          |          |          |
++----------+----------+----------+----------+
 
 #### Analysis:
 
@@ -2183,24 +2110,26 @@ specificity, and precision for the CART algorithm in our dataset.
 
 **C4.5 Algorithm Evaluation:**
 
-+-----------+-----------+-----------+-----------+
-|           | 80%       | 70%       | 60%       |
-|           | Training, | Training, | Training, |
-|           | 20%       | 30%       | 40%       |
-|           | Testing   | Testing   | Testing   |
-+===========+===========+===========+===========+
-| Accuracy  | 82        | 83        | 82        |
-+-----------+-----------+-----------+-----------+
-| Precision | 84        | 84        | 84        |
-+-----------+-----------+-----------+-----------+
-| S         | 95        | 96        | 94        |
-| e         |           |           |           |
-| nsitivity |           |           |           |
-+-----------+-----------+-----------+-----------+
-| S         | 42        | 40        | 43        |
-| p         |           |           |           |
-| ecificity |           |           |           |
-+-----------+-----------+-----------+-----------+
++----------+----------+----------+----------+
+|          | 80%      | 70%      | 60%      |
+|          | T        | T        | T        |
+|          | raining, | raining, | raining, |
+|          | 20%      | 30%      | 40%      |
+|          | Testing  | Testing  | Testing  |
++==========+==========+==========+==========+
+| Accuracy | 82       | 83       | 82       |
++----------+----------+----------+----------+
+| P        | 84       | 84       | 84       |
+| recision |          |          |          |
++----------+----------+----------+----------+
+| S e      | 95       | 96       | 94       |
+| n        |          |          |          |
+| sitivity |          |          |          |
++----------+----------+----------+----------+
+| S p      | 42       | 40       | 43       |
+| e        |          |          |          |
+| cificity |          |          |          |
++----------+----------+----------+----------+
 
 #### Analysis:
 
