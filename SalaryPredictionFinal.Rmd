@@ -1,0 +1,2325 @@
+---
+title: "Data Mining Final Phase"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
+  word_document: default
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Problem
+
+In today's dynamic job market, accurately predicting salaries is a
+crucial aspect for both job seekers and employers. The challenge lies in
+comprehending and understanding the various factors that contribute to
+an individual's earning potential. Our aim in this project is to develop
+a robust and precise salary prediction model based on various features
+such as education level, workclass, occupation, and so on.
+
+# Goal of Collecting this Dataset
+
+The goal of our dataset is to predict whether or not the yearly salary
+exceeds \$50,000 and cluster individuals based on their salaries. Salary
+is a great source of motivation for employees, and as a result, we
+believe that salary prediction and clustering can be helpful to both
+employees and their employers, as it can roughly calculate the expected
+salaries, identify salary trends, and the relationship between salaries
+and various factors. This information can be helpful to both employees
+and employers in negotiating for a fair salary, making better hiring
+decisions, and identifying areas for improvement.
+
+## Source of the Dataset
+
+The dataset was obtained from Kaggle.
+<https://www.kaggle.com/datasets/ayessa/salary-prediction-classification>
+
+# Data Mining Task
+
+Our overall aim is to create a reliable salary prediction model using
+both classification and clustering techniques. This model can assist
+employees and employers in making more informed decisions about
+compensation and hiring.
+
+Classification: We will classify employees into different groups based
+on their personal and professional characteristics to build a predictive
+model that accurately categorizes individuals into two groups. This will
+allow us to predict the salary of new employees based on some factors ,
+for example age, sex, salary ... etc
+
+Clustering: We will divide the employees into several groups based on
+their characteristics in the attributes value. This will allow us to
+identify groups of employees who are likely to have similar salaries
+without using the class label.
+
+We believe that by using these data mining tasks, we can build a model
+that can accurately predict the salary of an employee.
+
+# Data
+
+## General information:
+
+Our dataset contains 15 attributes and 32,561 objects. The class label
+is "salary".
+
+## Class Label
+
+The class label in this dataset is "salary," which represents whether an
+individual's income is greater than 50,000 (0). Understanding this class
+label is crucial because it is often the target variable in predictive
+modeling tasks, such as classification.
+
+Our attributes are the following:
+
++----------+----------+----------+
+| -   \    | -   \    | **D e s  |
+|     \*   |     \*   | c        |
+|          |          | r        |
+| A        | A        | iption** |
+| ttribute | ttribute |          |
+|          |          |          |
+| name\*\* | type\*\* |          |
++==========+==========+==========+
+| Age      | integer  | The      |
+|          |          | person's |
+|          |          | age in   |
+|          |          | years.   |
++----------+----------+----------+
+| w        | c a      | R        |
+| orkclass | t        | e        |
+|          | egorical | presents |
+|          |          | the e    |
+|          |          | m        |
+|          |          | ployment |
+|          |          | status.  |
++----------+----------+----------+
+| fnlwgt   | integer  | The      |
+|          |          | final    |
+|          |          | weight   |
+|          |          | of how   |
+|          |          | much of  |
+|          |          | the p    |
+|          |          | o        |
+|          |          | pulation |
+|          |          | it r e   |
+|          |          | p        |
+|          |          | resents. |
++----------+----------+----------+
+| e        | c a      | Highest  |
+| ducation | t        | level of |
+|          | egorical | e        |
+|          |          | d        |
+|          |          | ucation. |
++----------+----------+----------+
+| ed u c   | integer  | Highest  |
+| a        |          | level of |
+| tion-num |          | e        |
+|          |          | ducation |
+|          |          | in       |
+|          |          | n        |
+|          |          | umerical |
+|          |          | form.    |
++----------+----------+----------+
+| mar i t  | c a      | R        |
+| a        | t        | e        |
+| l-status | egorical | presents |
+|          |          | the      |
+|          |          | marital  |
+|          |          | status.  |
++----------+----------+----------+
+| o        | c a      | R        |
+| c        | t        | e        |
+| cupation | egorical | presents |
+|          |          | the o    |
+|          |          | c        |
+|          |          | cupation |
+|          |          | of the i |
+|          |          | n        |
+|          |          | d        |
+|          |          | ividual. |
++----------+----------+----------+
+| r e l    | c a      | R        |
+| a        | t        | e        |
+| tionship | egorical | presents |
+|          |          | the r e  |
+|          |          | l        |
+|          |          | a        |
+|          |          | tionship |
+|          |          | status.  |
++----------+----------+----------+
+| race     | c a      | R        |
+|          | t        | e        |
+|          | egorical | presents |
+|          |          | the      |
+|          |          | person's |
+|          |          | race.    |
++----------+----------+----------+
+| sex      | binary   | The      |
+|          |          | person's |
+|          |          | gender.  |
++----------+----------+----------+
+| c a p    | integer  | R        |
+| i        |          | e        |
+| tal-gain |          | presents |
+|          |          | the      |
+|          |          | capital  |
+|          |          | gain.    |
++----------+----------+----------+
+| c a p    | integer  | R        |
+| i        |          | e        |
+| tal-loss |          | presents |
+|          |          | the      |
+|          |          | capital  |
+|          |          | loss.    |
++----------+----------+----------+
+| hou r s  | c        | R        |
+| .        | o        | e        |
+| per.week | ntinuous | presents |
+|          |          | the      |
+|          |          | hours    |
+|          |          | the      |
+|          |          | person   |
+|          |          | works    |
+|          |          | per      |
+|          |          | week.    |
++----------+----------+----------+
+| nat i v  | c a      | The      |
+| e        | t        | person's |
+| -country | egorical | country. |
++----------+----------+----------+
+| salary   | binary   | The      |
+|          |          | class    |
+|          |          | label;   |
+|          |          | it       |
+|          |          | i        |
+|          |          | ndicates |
+|          |          | whether  |
+|          |          | the      |
+|          |          | person   |
+|          |          | makes    |
+|          |          | more or  |
+|          |          | less     |
+|          |          | than     |
+|          |          | \        |
+|          |          | $50,000. |
++----------+----------+----------+
+
+### Call the dataset
+
+```{r}
+dataset=read.csv('salary.csv')
+```
+
+This a sample of our 'salary' dataset
+
+```{r}
+head(dataset)
+```
+
+Create a new column called num_salary to transform the binary attribute
+into numerical to use it better as it it the class label
+
+```{r}
+dataset$num_salary <-  as.integer(factor(dataset$salary))
+dataset$num_salary=cut(dataset$num_salary,breaks= c(1,2, Inf),labels=c(0, 1),right = FALSE)
+dataset$num_salary=as.factor(dataset$num_salary)
+
+```
+
+### Installing the packages:
+
+```{r}
+
+install.packages("scatterplot3d", repos = "https://cran.r-project.org") 
+install.packages("dplyr", repos = "https://cran.r-project.org")
+install.packages("ggplot2",  repos = "https://cran.r-project.org")
+install.packages("colorspace",  repos = "https://cran.r-project.org") 
+
+```
+
+### Reading libraries and the dataset
+
+```{r}
+library(ggplot2)
+library(scatterplot3d)
+library(dplyr)
+library(readr)
+```
+
+### Statistical Measures
+
+```{r}
+summary(dataset$age)
+summary(dataset$hours.per.week)
+summary(dataset$fnlwgt)
+```
+
+**Analysis:**
+
+age: The mean has a value of 38.58, and the data range from 17 up to a
+maximum of 90.
+
+hours.per.week: The mean has a value of 40.44. The median and 1st
+quartile have the same value, suggesting symmetry.
+
+fnlwgt: The mean is 189778. 75% of the data falls below 237051. The mean
+being greater than the median suggests a right-skewed distribution.
+
+### Missing Values
+
+```{r}
+sum(is.na(dataset))
+
+```
+
+### Finding Outliers
+
+Install the needed packages and libraries
+
+```{r}
+install.packages("outliers", repos = "https://cran.r-project.org")
+library(outliers)
+```
+
+```{r}
+OutAge = outlier(dataset$age, logical =TRUE)
+Find_outlierAge = which(OutAge ==TRUE, arr.ind = TRUE)
+```
+
+```{r}
+Outfnlwgt = outlier(dataset$fnlwgt, logical =TRUE)
+Find_outlierFnlwgt = which(Outfnlwgt ==TRUE, arr.ind = TRUE)
+```
+
+```{r}
+Outhours = outlier(dataset$hours.per.week, logical =TRUE)
+Find_outlierHours = which(Outhours ==TRUE, arr.ind = TRUE)
+```
+
+### Boxplot
+
+A boxplot is a visualization of the five-number summary.
+
+The hours.per.week boxplot illustrates that there are 9008 outliers in
+the attribute.
+
+```{r}
+
+boxplot(dataset$hours.per.week)
+
+
+```
+
+The age boxplot illustrates that there are 143 outliers in the
+attribute.
+
+```{r}
+
+ boxplot(dataset$age)
+```
+
+The fnlwgt boxplot illustrates that there is 992 outliers in the
+attribute.
+
+```{r}
+
+boxplot(dataset$fnlwgt)
+```
+
+### Histograms
+
+Histograms are graphs that show the frequency of numerical data using
+rectangles.The height of a rectangle represents the distribution
+frequency of a variable.[1]
+
+The age histogram tells us that most of our observations are close in
+age, with a minority being older.
+
+```{r}
+# Histogram of the age variable
+ggplot(dataset, aes(x = age)) +
+  geom_histogram()
+
+```
+
+We see in the histogram for 'hours.per.week' that the overwhelming
+majority work 40 hours a week.
+
+```{r}
+# Histogram of the hours-per-week variable
+ggplot(dataset, aes(x = hours.per.week)) +
+  geom_histogram()
+
+
+```
+
+In the histogram for 'fnlwgt', we see that the majority (over 7000), is
+between 100000 and 200000.
+
+```{r}
+# Histogram of the fnlwgt variable
+ggplot(dataset, aes(x = fnlwgt)) +
+  geom_histogram()
+```
+
+### Barplots
+
+A barplot shows the relationship between a numeric and a categorical
+variable. Each entity of the categorical variable is represented as a
+bar. The size of the bar represents its numeric value.[2]
+
+In the workclass barplot, we can see that majority belong to the
+workclass 'Private', while the rest were distributed among other
+workclass levels.
+
+```{r}
+# Bar plot of the workclass variable
+ggplot(dataset, aes(x = workclass)) + geom_bar()
+
+```
+
+In marital.status barplot, the majority had a 'Married-civ-spouse'
+status, followed closely by 'Never-married', then level 'Divorced'.
+'Widowed' and 'Separated' were fairly close, and 'Married-AF-spouse' was
+the minority.
+
+```{r}
+# Bar plot of the marital-status variable
+ggplot(dataset, aes(x = marital.status)) + geom_bar()
+```
+
+We see in the occupation barplot we can see that the overwhelming
+majority were in the occupation 'Prof-speciality'
+
+```{r}
+# Bar plot of the occupation variable
+ggplot(dataset, aes(x = occupation)) + geom_bar()
+```
+
+In the relationship bar plot, we can see that the majority were
+Husbands, followed by 'Not-in-family', then 'Own-child', the
+'Unmarried', then 'Wife', with 'Other-relative' being the minority.
+
+```{r}
+# Bar plot of the relationship variable
+ggplot(dataset, aes(x = relationship)) + geom_bar()
+
+```
+
+In 'sex' barplot, we see that the majority of the observations were
+Male.
+
+```{r}
+# Bar plot of the sex variable
+ggplot(dataset, aes(x = sex)) +geom_bar()
+
+```
+
+In the native.country bar plot, we can see that an astounding majority
+are from the United States.
+
+```{r}
+# Bar plot of the native-country variable
+ggplot(dataset, aes(x = native.country)) + geom_bar()
+
+
+```
+
+In the salary bar plot, we see that the majority of the rows are in the
+'\<=50' class. This tells us that the dataset is imbalanced. This is
+representative of real-world distribution.
+
+```{r}
+# Bar plot of the salary variable
+ggplot(dataset, aes(x = salary)) + geom_bar()
+```
+
+### Scatterplot
+
+Scatterplots are plots that represent the relationship between
+variables.
+
+The following scatterplot tells us that there's no correlation between
+salary, hours.per.week, and age.
+
+```{r}
+grps <- as.factor(dataset$num_salary)
+colors <- c("#123456", "#56B4E9", "#E69F00")
+scatterplot3d(dataset$num_salary, dataset$age, dataset$hours.per.week, pch = 16, color = colors[grps],
+              grid = TRUE, box = FALSE, xlab = "Salary", 
+              ylab = "Age", zlab = "Hours per week")
+```
+
+### Pie chart
+
+Pie chart is a type of chart that represents data in a circular form,
+with every sector represents a portion of the data. What we can see in
+our pie-chart is that our dataset is unbalanced. With the majority of
+rows being classified under the 'less than 50K' class.
+
+```{r}
+tab <- dataset$salary %>% table()
+precentages <- tab %>% prop.table() %>% round(3) * 100 
+txt <- paste0(names(tab), '\n', precentages, '%') 
+pie(tab, labels=txt)
+```
+
+### Create a density plot for the age variable
+
+A density plot can be seen as an expansion of the histogram.It can
+smooth out the distribution of values and minimizes noise data. It peaks
+show where values are intensive.[3]
+
+We can see in our density plot for 'age', the plot peaks just slightly
+above 0.4, then progressively dives.
+
+```{r}
+ggplot(data = dataset, aes(x = age)) + 
+  geom_density()
+```
+
+# Data Preprocessing
+
+First and foremost, we will remove a few of our columns. We will remove
+education, capital.gain, and capital.loss. Education to avoid
+redundancy, as we believe education.num is adequate on its own. We will
+remove capital.loss and capital.gain due to low variance, with
+overwhelming majority of rows being zero.
+
+Our dataset now contains 12 columns, including our class label, which is
+salary.
+
+```{r}
+dataset<- dataset[-c(4, 11,12)]
+```
+
+Here's the dataset before preprocessing:
+
+```{r}
+head(dataset)
+```
+
+### Summary of the dataset
+
+```{r}
+summary(dataset)
+```
+
+## Data cleaning:
+
+Before we start processing the data, we checked if our dataset contains
+missing or null values and delete them to maintain the efficiency of the
+data set.
+
+To clean the data of the dataset, we are going to detect and remove
+outliers, fill in missing values, and replace negative values.
+
+### Removing missing values:
+
+We noticed that there is a question mark in some values although we
+checked the missing values in previous part and the resault was 0 so we
+are going to clean them by deleting the row. We do this to help reduce
+bias.
+
+```{r}
+dataset <- na.omit(dataset)
+head(dataset)
+```
+
+### Removing outliers
+
+We will detect outliers in all numerical attributes and remove them. The
+reason we do this is because outliers can affect the output of the
+result, leading to possible inaccuracy later on in the
+classification/clustering process.
+
+```{r}
+#Remove outlier
+dataset= dataset[-Find_outlierHours,]
+
+dataset= dataset[-Find_outlierFnlwgt,]
+
+dataset= dataset[-Find_outlierAge,]
+
+```
+
+Printing the dataset after cleaning the data
+
+```{r}
+head(dataset)
+```
+
+## Data Transformation
+
+### Encoding the data:
+
+The reason we performed encoding on our dataset is because it not only
+preserves the integrity of our data, but also because machine learning
+algorithms work with numerical values.
+
+A sample of the dataset before encoding:
+
+```{r}
+head(dataset)
+```
+
+We will know encode the dataset using the following code:
+
+```{r}
+dataset$workclass <-  as.integer(factor(dataset$workclass))
+dataset$marital.status <-  as.integer(factor(dataset$marital.status))
+dataset$occupation <-  as.integer(factor(dataset$occupation))
+dataset$relationship <-  as.integer(factor(dataset$relationship))
+dataset$race <-  as.integer(factor(dataset$race))
+dataset$sex <-  as.integer(factor(dataset$sex))
+dataset$native.country <-  as.integer(factor(dataset$native.country))
+head(dataset)
+```
+
+Sample of the dataset after encoding:
+
+```{r}
+head(dataset)
+```
+
+### Normalization
+
+Normalization is applied as part of data preparation for machine
+learning. Its purpose is to change the values of numeric columns in the
+dataset to use a common scale, without distorting differences in the
+ranges of values or losing information.
+
+Sample of the dataset before normalization:
+
+```{r}
+head(dataset)
+```
+
+Normalize attributes: age, fnlwgt, hours.per.week
+
+```{r}
+dataWithoutNormalization <- dataset
+
+#Define function normalize().
+normalize <- function(x) {return ((x - min(x)) / (max(x) - min(x)))}
+#Define function Z_normalize().
+Z_normalize <- function(x) {return ((x - mean(x)) / sd(x))}
+
+#Call normalize function 
+dataset$age<-normalize(dataWithoutNormalization$age)
+
+
+#Call Z_normalize function 
+dataset$age<-Z_normalize(dataWithoutNormalization$age)
+
+
+######################################
+
+#Call normalize function 
+dataset$fnlwgt<-normalize(dataWithoutNormalization$fnlwgt)
+
+
+#Call Z_normalize function 
+dataset$fnlwgt<-Z_normalize(dataWithoutNormalization$fnlwgt)
+
+######################################
+
+#Call normalize function 
+dataset$hours.per.week<-normalize(dataWithoutNormalization$hours.per.week)
+
+
+#Call Z_normalize function 
+dataset$hours.per.week<-Z_normalize(dataWithoutNormalization$hours.per.week)
+
+
+```
+
+Sample of the dataset after normalization:
+
+```{r}
+head(dataset)
+```
+
+### Data summary after preprocessing:
+
+```{r}
+# number of rows
+nrow(dataset)
+```
+
+There are 32432 rows in the dataset after preprocessing.
+
+```{r}
+# number of columns 
+ncol(dataset)
+```
+
+There are 13 columns after preprocessing.
+
+```{r}
+# Dimensionalitly 
+ dim(dataset)
+```
+
+There are 32432 rows and 13 columns in the dataset after preprocessing
+
+Here are the column Names of clean and transformed Dataset
+
+```{r}
+names(dataset)
+```
+
+Here's the dataset after preprocessing:
+
+```{r}
+head(dataset)
+```
+
+# Data Mining Techniques
+
+Clustering and classification represent essential techniques in data
+mining, each serving distinct purposes. Clustering is unsupervised and
+focuses on grouping similar data points, while classification is
+supervised and involves training models to predict labels for new data.
+Both techniques contribute significantly to the exploration, analysis,
+and interpretation of large datasets, providing valuable insights and
+supporting decision-making processes in various domains.
+
+## Clustering
+
+First, we install the needed packages and libraries.
+
+For clustering, we will be using the packages and libraries 'dplyr',
+'tidyverse', 'e1071', 'cluster', 'factoextra', 'fpc'.
+
+The packages 'dplyr' and 'tidyverse' provide a set of functions for data
+manipulation and transformation. They are particularly useful for
+preparing and cleaning data before clustering.
+
+The package 'e1071' includes functions for statistical learning,
+including support for the k-means clustering algorithm (kmeans). It is
+part of the core set of packages for machine learning and data analysis.
+
+The 'cluster' package provides various clustering algorithms, such as
+hierarchical clustering and model-based clustering. It's valuable for
+exploring different clustering methods.
+
+The package 'factoextra' is designed for extracting and visualizing
+information from the results of multivariate data analyses. It
+complements clustering analyses by providing visualization functions to
+interpret and communicate the results.
+
+Lastly, 'fpc', or Flexible Procedures for Clustering, package includes
+functions for assessing clustering tendency and quality. It provides
+metrics such as silhouette width (cluster.stats).
+
+```{r}
+install.packages("dplyr",  repos = "https://cran.r-project.org")
+install.packages("tidyverse",  repos = "https://cran.r-project.org")
+install.packages("e1071",  repos = "https://cran.r-project.org")
+install.packages("cluster",  repos = "https://cran.r-project.org")
+install.packages("factoextra",  repos = "https://cran.r-project.org")
+install.packages("fpc",  repos = "https://cran.r-project.org")
+library(dplyr)
+library(tidyverse)
+library(e1071)
+library(cluster)
+library(factoextra)
+library(fpc)
+```
+
+Take a sample of the first 10,000 rows in the dataset.
+
+```{r}
+
+sampleDataset = dataset[1:10000,]
+
+```
+
+### Preparing the data before clustering:
+
+We will first start by deleting the class label, as clustering is an
+unsupervised learning.
+
+```{r}
+data_clustring <- subset(sampleDataset, select = -c(salary, num_salary))
+data_clustring <- scale(data_clustring[, sapply(data_clustring, is.numeric)])
+
+head(data_clustring)
+
+```
+
+It is a good idea to experiment with different values of k to determine
+the best value for our dataset. By using various methods, such as the
+silhouette coefficient or the gap statistic, to evaluate the quality of
+different clustering solutions and select the one that best represents
+the underlying structure of the data.
+
+### Perform K-means clustering (for k = 2 clusters)
+
+```{r}
+kmeans_model <- kmeans(data_clustring,2 , nstart = 50)
+sample(kmeans_model$cluster, 30) 
+```
+
+#### Extract the cluster assignments
+
+This stores cluster vector into a separate variable named clusters. This
+allows us to work with the cluster labels independently of the
+kmeans_model (we will use it for calculating the BCubed precision and
+recall)
+
+```{r}
+clusters <- kmeans_model$cluster
+```
+
+#### Visualize the clusters
+
+```{r}
+fviz_cluster(list(data = data_clustring, cluster = clusters), geom = "point", main= "cluster plot for k=2")
+
+
+```
+
+**Plot Explanation:**
+
+The cluster plot for k=2 shows two well-defined clusters, with slight
+overlap. The data points in each cluster are tightly clustered around
+the respective cluster centroid. This suggests that the k-means
+algorithm has effectively partitioned the data into two distinct groups
+
+#### Calculating the avg silhouette
+
+```{r}
+avg_sil=silhouette (kmeans_model$cluster, dist(data_clustring))
+fviz_silhouette(avg_sil)
+```
+
+**Plot Explanation:**
+
+The silhouette width of 0.16 indicates that the clusters are moderately
+well-defined. This suggests that there may be some data points that are
+closer to the centroid of the other cluster than their own cluster, but
+the overall cluster structure is still strong.
+
+#### Total within-cluster sum of square
+
+The WCSS is a measure of the compactness of the clusters, and it
+represents the total distance of all data points within their respective
+clusters. A lower WCSS indicates that the clusters are more compact and
+well-separated, while a higher WCSS suggests that the clusters are more
+spread out and less distinct.
+
+```{r}
+kmeans_model$tot.withinss
+```
+
+Based on the graph and since the Total within-cluster sum of square is
+94215.99, the clusters appear to be well-defined. The data points in
+each cluster are closely grouped together, and there is slight overlap
+between the two clusters. This suggests that the
+kmeans_model\$tot.withinss value is relatively low, indicating that the
+clusters are compact.
+
+#### Calculate BCubed precision and recall
+
+First we set the ground truth
+
+```{r}
+ground_truth <- c(sampleDataset$salary)
+```
+
+#### Setting the functions for calculating the BCubed precision and recall
+
+```{r}
+BCubed_Precision <- function(clusters, ground_truth) {
+  n <- length(clusters)
+  precision <- 0
+  for (i in 1:n) {
+    same_cluster <- clusters == clusters[i]
+    same_ground_truth <- ground_truth == ground_truth[i]
+    precision <- precision + sum(same_cluster & same_ground_truth) / sum(same_cluster)
+  }
+  precision <- precision / n
+  return(precision)
+}
+
+BCubed_Recall <- function(clusters, ground_truth) {
+  n <- length(clusters)
+  recall <- 0
+  for (i in 1:n) {
+    same_cluster <- clusters == clusters[i]
+    same_ground_truth <- ground_truth == ground_truth[i]
+    recall <- recall + sum(same_cluster & same_ground_truth) / sum(same_ground_truth)
+  }
+  recall <- recall / n
+  return(recall)
+}
+
+
+
+```
+
+#### Calculate BCubed precision and recall using the cluster assignments and ground truth
+
+```{r}
+precision <- BCubed_Precision(clusters, ground_truth)
+recall <- BCubed_Recall(clusters, ground_truth)
+```
+
+#### View the calculated precision and recall
+
+```{r}
+print(precision)
+print(recall)
+```
+
+### Perform K-means clustering (for k = 3 clusters)
+
+```{r}
+kmeans_model <- kmeans(data_clustring,3 , nstart = 50)
+sample(kmeans_model$cluster, 30) 
+```
+
+#### Extract the cluster assignments
+
+This stores cluster vector into a separate variable named clusters. This
+allows us to work with the cluster labels independently of the
+kmeans_model (we will use it for calculating the BCubed precision and
+recall)
+
+```{r}
+clusters <- kmeans_model$cluster
+```
+
+#### Visualize the clusters
+
+```{r}
+fviz_cluster(list(data = data_clustring, cluster = clusters), geom = "point", main= "cluster plot for k=3")
+
+```
+
+**Plot Explanation:**
+
+The cluster plot effectively identifies three distinct groups of data
+points. The clusters overlap between the blue cluster and the red and
+green clusters.
+
+#### Calculating the avg silhouette
+
+```{r}
+avg_sil=silhouette (kmeans_model$cluster, dist(data_clustring))
+fviz_silhouette(avg_sil)
+```
+
+**Plot Explanation:**
+
+The plot shows silhouette width of 0.18 it is considered to be a low,
+but it is not necessarily bad. It simply means that the clusters are not
+perfectly separated(maybe due to the clusters overlapping) .
+
+#### Total within-cluster sum of square
+
+```{r}
+kmeans_model$tot.withinss
+```
+
+The kmeans_model\$tot.withinss value of 86246.29 indicates that the
+clusters are compact. The data points in each cluster are tightly
+grouped together.
+
+#### Calculate BCubed precision and recall
+
+First we set the ground truth
+
+```{r}
+ground_truth <- c(sampleDataset$salary)
+```
+
+#### Setting the functions for calculating the BCubed precision and recall
+
+```{r}
+BCubed_Precision <- function(clusters, ground_truth) {
+  n <- length(clusters)
+  precision <- 0
+  for (i in 1:n) {
+    same_cluster <- clusters == clusters[i]
+    same_ground_truth <- ground_truth == ground_truth[i]
+    precision <- precision + sum(same_cluster & same_ground_truth) / sum(same_cluster)
+  }
+  precision <- precision / n
+  return(precision)
+}
+
+BCubed_Recall <- function(clusters, ground_truth) {
+  n <- length(clusters)
+  recall <- 0
+  for (i in 1:n) {
+    same_cluster <- clusters == clusters[i]
+    same_ground_truth <- ground_truth == ground_truth[i]
+    recall <- recall + sum(same_cluster & same_ground_truth) / sum(same_ground_truth)
+  }
+  recall <- recall / n
+  return(recall)
+}
+
+
+
+```
+
+#### Calculate BCubed precision and recall using the cluster assignments and ground truth
+
+```{r}
+precision <- BCubed_Precision(clusters, ground_truth)
+recall <- BCubed_Recall(clusters, ground_truth)
+```
+
+#### View the calculated precision and recall
+
+```{r}
+print(precision)
+print(recall)
+```
+
+### Perform K-means clustering (for k = 4 clusters)
+
+```{r}
+kmeans_model <- kmeans(data_clustring,4 , nstart = 50)
+sample(kmeans_model$cluster, 30) 
+```
+
+#### Extract the cluster assignments
+
+This stores cluster vector into a separate variable named clusters. This
+allows us to work with the cluster labels independently of the
+kmeans_model (we will use it for calculating the BCubed precision and
+recall)
+
+```{r}
+clusters <- kmeans_model$cluster
+```
+
+#### Visualize the clusters
+
+```{r}
+fviz_cluster(list(data = data_clustring, cluster = clusters), geom = "point", main= "cluster plot for k=4")
+
+```
+
+**Plot Explanation:**
+
+The plot depicts a k-means clustering algorithm applied to data with
+four distinct clusters. Each cluster is represented by a group of
+points, with larger points indicating more data points in that cluster.
+The clusters are compact, indicating that the k-means algorithm
+effectively grouped similar data points together.
+
+#### Calculating the avg silhouette
+
+```{r}
+avg_sil=silhouette (kmeans_model$cluster, dist(data_clustring))
+fviz_silhouette(avg_sil)
+```
+
+**Plot Explanation:**
+
+The plot shows silhouette width of 0.17 it is considered to be a low,
+but it is not necessarily bad. It simply means that the clusters are not
+perfectly separated (maybe due to the overlapping) .
+
+#### Total within-cluster sum of square
+
+```{r}
+kmeans_model$tot.withinss
+```
+
+Based on the graph provided, the kmeans_model\$tot.withinss value of
+79699.02 indicates that the clusters are compact. The data points in
+each cluster are tightly grouped together, and there is a clear gap
+between the two clusters. This is evident in the fact that the two
+clusters are clearly distinct in the plot, with little overlap between
+them.
+
+#### Calculate BCubed precision and recall
+
+First we set the ground truth
+
+```{r}
+ground_truth <- c(sampleDataset$salary)
+```
+
+#### Setting the functions for calculating the BCubed precision and recall
+
+```{r}
+BCubed_Precision <- function(clusters, ground_truth) {
+  n <- length(clusters)
+  precision <- 0
+  for (i in 1:n) {
+    same_cluster <- clusters == clusters[i]
+    same_ground_truth <- ground_truth == ground_truth[i]
+    precision <- precision + sum(same_cluster & same_ground_truth) / sum(same_cluster)
+  }
+  precision <- precision / n
+  return(precision)
+}
+
+BCubed_Recall <- function(clusters, ground_truth) {
+  n <- length(clusters)
+  recall <- 0
+  for (i in 1:n) {
+    same_cluster <- clusters == clusters[i]
+    same_ground_truth <- ground_truth == ground_truth[i]
+    recall <- recall + sum(same_cluster & same_ground_truth) / sum(same_ground_truth)
+  }
+  recall <- recall / n
+  return(recall)
+}
+
+
+
+```
+
+#### Calculate BCubed precision and recall using the cluster assignments and ground truth
+
+```{r}
+precision <- BCubed_Precision(clusters, ground_truth)
+recall <- BCubed_Recall(clusters, ground_truth)
+```
+
+#### View the calculated precision and recall
+
+```{r}
+print(precision)
+print(recall)
+```
+
+### Evaluation and Comparison: Clustering
+
++------------+---------------+-------------------+---------------+
+|            | K=2           | K=3               | K=4           |
++============+===============+===================+===============+
+| Average    | 0.16          | 0.18              | 0.17          |
+| Sillouette |               |                   |               |
+| width      |               |                   |               |
++------------+---------------+-------------------+---------------+
+| Total w i  | 94215.99      | 86246.29          | 79699.02      |
+| t h        |               |                   |               |
+| in-cluster |               |                   |               |
+| sum of     |               |                   |               |
+| square     |               |                   |               |
++------------+---------------+-------------------+---------------+
+| BCubed     | 0.6728333     | 0.670029          | 0.6884835     |
+| Precision  |               |                   |               |
++------------+---------------+-------------------+---------------+
+| BCubed     | 0.5575594     | 0.4975389         | 0.4061215     |
+| Recall     |               |                   |               |
++------------+---------------+-------------------+---------------+
+| V i s      | ![](imag      | ![](              | ![](imag      |
+| ualization | es/k2-02.png) | images/k3-01.png) | es/k4-01.png) |
++------------+---------------+-------------------+---------------+
+
+#### Analysis:
+
+Average Silhouette Width: K=3 shows the highest silhouette width (0.18),
+indicating better-defined clusters in comparison to K=2 and K=4.
+
+Total Within-Cluster Sum of Squares: As the number of clusters
+increases, the total within-cluster sum of squares decreases, suggesting
+better compactness or tighter clustering.
+
+Precision and Recall: While precision remains relatively consistent,
+recall shows a decline as the number of clusters increases. This
+suggests a trade-off between precision and recall, where a higher number
+of clusters might lead to better precision but lower recall due to more
+fragmented or smaller clusters.
+
+**Overall Comparison:**
+
+K=2 has the highest recall, highlighting the ability to find all
+relevant cases.
+
+K=3 appears to strike a balance with good silhouette width and
+reasonable precision and recall. It shows the highest average silhouette
+width, indicating well-defined clusters.
+
+K=4 shows high precision but at the expense of lower recall, possibly
+due to the fragmentation of data into smaller clusters. It demonstrates
+the lowest total within-cluster sum of square, suggesting more compact
+clusters.
+
+**Comparison of WCSS:**
+
+Clustering Result 1: kmeans_model\$tot.withinss = 94215.99
+
+The clusters appear to be well-defined in the graph. The WCSS value of
+94215.99 is moderate, suggesting that the clusters are neither overly
+compact nor overly spread out.
+
+Clustering Result 2: kmeans_model\$tot.withinss = 86246.29
+
+The clusters appear to be compact in the graph. The WCSS value of
+86246.29 is lower than the first clustering result, indicating that the
+clusters are more compact in this case.
+
+Clustering Result 3: kmeans_model\$tot.withinss = 79699.02
+
+The clusters appear to be very compact in the graph. The WCSS value of
+79699.02 is the lowest of the three clustering results, indicating that
+the clusters are the most compact in this case.
+
+**Recommendation:**
+
+Based on the WCSS values and the visual inspection of the clusters in
+the graphs, we would suggest that Clustering Result 3
+(kmeans_model\$tot.withinss = 78834) is the best of the three clustering
+solutions. The clusters in this result are the most compact, and the
+WCSS value is significantly lower than the other two results.
+
+### Finding optimal number of clusters
+
+```{r}
+silhouette_score <- function(k){ 
+km <- kmeans(data_clustring, centers = k,nstart=50) # if centers is a number, how many random sets should be chosen?
+ss <- silhouette(km$cluster, dist(data_clustring))
+sil<- mean(ss[, 3])
+return(sil)
+}
+```
+
+#### k cluster range from 2 to 10
+
+```{r}
+k <- 2:10
+```
+
+#### call function fore k value
+
+```{r}
+avg_sil <- sapply(k, silhouette_score)
+plot(k, type='b', avg_sil, xlab='Number of clusters', ylab='Average Silhouette Scores', frame=FALSE)
+```
+
+The Silhouette method graph shows how the average silhouette coefficient
+changes as the number of clusters (k) increases. The optimal number of
+clusters is often chosen as the value of k that corresponds to the
+highest average silhouette coefficient. However, it is important to note
+that the highest average silhouette coefficient may not necessarily
+indicate the best clustering solution. For example, if the average
+silhouette coefficient is high for all values of k, it may suggest that
+the data is not well-clustered at all.
+
+### Finding the optimal number of clusters applying Silhouette method
+
+```{r}
+fviz_nbclust(data_clustring, kmeans, method = "silhouette")+
+  labs(subtitle = "Silhouette method")
+```
+
+### Finding the optimal number of clusters applying Elbow method
+
+```{r}
+fviz_nbclust(data_clustring, kmeans, method = "wss") +
+  geom_vline(xintercept = 4, linetype = 2)+
+  labs(subtitle = "Elbow method")
+
+```
+
+The Elbow method graph shows that the WCSS decreases rapidly as the
+number of clusters (k) increases. However, the rate of decrease slows
+down significantly after k=2. This suggests that k=2 is likely to be the
+optimal number of clusters, as it minimizes the WCSS without overfitting
+the data
+
+## Classification
+
+Classification uses supervised learning, meaning it uses labeled
+datasets to train models to classify or predict data. We will be
+applying three different algorithms: ID3, C4.5, and CART.
+
+First, we'll start with installing the neccessary libraries and
+packages.
+
+```{r}
+install.packages("party",  repos = "https://cran.r-project.org")
+library(party)
+install.packages("caret",  repos = "https://cran.r-project.org")
+library(caret)
+install.packages("ctree",  repos = "https://cran.r-project.org")
+library(rpart)
+library(rpart.plot)
+library(RWeka)
+install.packages("partykit",  repos = "https://cran.r-project.org")
+```
+
+### ID3 Algorithm:
+
+In the ID3 trees, we will be using the packages 'party', 'caret', and
+the library 'ctree'.
+
+The 'party' package provides functionalities for recursive partitioning
+and constructing decision trees. And the 'caret' package acts as a
+unified interface to various machine learning algorithms and provides
+tools for preprocessing, feature selection, model training, and
+evaluation. The 'ctree' library is specifically designed for
+constructing conditional inference trees.
+
+Taking a sample of the first 10000 rows in our dataset, we then divided
+them into two: a training set and a testing set. For the training model,
+we used 3 different sizes; 60%, 70% and 80%.
+
+```{r}
+
+#evaluation: 60% training, 40% testing
+
+sampleDataset=dataset[1:10000, ]
+set.seed(1234)
+ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.6, 0.4))
+trainingData <- sampleDataset[ind == 1,]
+testingData <- sampleDataset[ind == 2,]
+
+myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex  + native.country
+salary_Tree <- ctree(myFormula, data = trainingData)
+plot(salary_Tree, type = "simple")
+
+```
+
+```{r}
+
+print(salary_Tree)
+
+```
+
+**Tree Explanation:** Root Splitting Criteria: The tree begins by
+splitting the data based on the education level (education.num). This
+means the algorithm is trying to find patterns related to education.
+
+Low Education Level (education.num \<= 12):
+
+If a person has a low education level (less than or equal to 12 years),
+the tree further considers:
+
+-   If their relationship status is less than or equal to 1 (presumably
+    indicating being single), it looks at their age and education level.
+    -If the person's age is less than or equal to a certain value and
+    their hours worked per week are less than or equal to a certain
+    value, it predicts a certain income level. -If the person's age is
+    greater than a certain value, it looks at their education level to
+    make a prediction. -If the person has a higher education level
+    (education.num \> 8), it looks at their hours worked per week and
+    age to make a prediction. -If a person has a higher education level
+    (education.num \> 12), the tree considers their marital status to
+    make further predictions.It looks at different conditions based on
+    marital status and education level.
+
+```{r}
+
+# Convert the response variable to a factor
+testingData$num_salary <- as.factor(testingData$num_salary)
+
+# Data Prediction
+testPrediction <- predict(salary_Tree, newdata = testingData)
+
+# Ensure testPrediction has the same levels as testingData$num_salary
+testPrediction <- factor(testPrediction, levels = levels(testingData$num_salary))
+
+# Create Confusion Matrix
+results <- confusionMatrix(as.factor(testPrediction), testingData$num_salary)
+print(results)
+```
+
+```{r}
+#evaluation: 70% training, 30% testing
+
+sampleDataset=dataset[1:10000, ]
+set.seed(1234)
+ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.7, 0.3))
+trainingData <- sampleDataset[ind == 1,]
+testingData <- sampleDataset[ind == 2,]
+
+myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex  + native.country
+salary_Tree <- ctree(myFormula, data = trainingData)
+
+plot(salary_Tree, type = "simple")
+
+```
+
+```{r}
+print(salary_Tree)
+
+```
+
+**Tree Explanation:**
+
+Root Splitting Criteria: this tree starts by splitting based on
+education level (education.num).
+
+Low Education Level (education.num \<= 12):
+
+It considers conditions related to age, hours worked per week, marital
+status, and native country.
+
+For example, if a person's age is below a certain threshold and their
+native country is above a certain value, it predicts a certain income
+level.
+
+If a person has a higher education level (education.num \> 12), the tree
+looks at conditions related to age, sex, relationship status, and
+education level to make predictions.
+
+```{r}
+# Convert the response variable to a factor
+testingData$num_salary <- as.factor(testingData$num_salary)
+
+# Data Prediction
+testPrediction <- predict(salary_Tree, newdata = testingData)
+
+# Ensure testPrediction has the same levels as testingData$num_salary
+testPrediction <- factor(testPrediction, levels = levels(testingData$num_salary))
+
+# Create Confusion Matrix
+results <- confusionMatrix(as.factor(testPrediction), testingData$num_salary)
+print(results)
+```
+
+```{r}
+
+##evaluation: 80% training, 20% testing
+sampleDataset=dataset[1:10000, ]
+set.seed(1234)
+ind <- sample(2, nrow(sampleDataset), replace = TRUE, prob = c(0.8, 0.2))
+trainingData <- sampleDataset[ind == 1,]
+testingData <- sampleDataset[ind == 2,]
+
+myFormula <- num_salary ~ age + workclass + fnlwgt +education.num +marital.status + hours.per.week + occupation + relationship + race + sex + native.country
+salary_Tree <- ctree(myFormula, data = trainingData)
+
+plot(salary_Tree, type = "simple")
+
+
+
+```
+
+```{r}
+print(salary_Tree)
+
+```
+
+**Tree Explanation:**
+
+Root Splitting Criteria: The third decision tree begins by splitting
+based on education level (education.num).
+
+Low Education Level (education.num \<= 12):
+
+If a person has a low education level, the tree considers their age and
+marital status to make predictions.
+
+It looks at conditions related to these features and reaches terminal
+nodes with specific predictions.
+
+If a person has a higher education level (education.num \> 12), the tree
+looks at conditions related to age, marital status, and relationship
+status.
+
+It further branches based on these conditions until reaching terminal
+nodes with predictions.
+
+```{r}
+# Convert the response variable to a factor
+testingData$num_salary <- as.factor(testingData$num_salary)
+
+# Data Prediction
+testPrediction <- predict(salary_Tree, newdata = testingData)
+
+# Ensure testPrediction has the same levels as testingData$num_salary
+testPrediction <- factor(testPrediction, levels = levels(testingData$num_salary))
+
+# Create Confusion Matrix
+results <- confusionMatrix(as.factor(testPrediction), testingData$num_salary)
+print(results)
+```
+
+**Summary:** The algorithm shows varying degrees of accuracy,
+sensitivity, specificity, and precision, suggesting its performance is
+influenced by the composition of the training and testing datasets.
+
+After constructing our three decision trees using ID3 algorithm, we can
+see that the attribute 'education.num' was the root node in all three of
+our trees. This means that 'education.num' has the highest information
+gain.
+
+### CART Algorithm
+
+We will be using the libraries 'rpart' and 'rpart.plot'. The 'rpart'
+package allows users to build decision trees based on recursive binary
+splits, creating a tree structure that best separates the data based on
+predictor variables.
+
+And the 'rpart.plot' package complements the 'rpart' package by
+providing functions to visualize decision trees created using 'rpart'.
+
+The cp (complexity parameter) in the CART algorithm determines the
+complexity of the tree. The smaller the cp, the more complex the tree
+becomes. We will try 3 different cp values; 0.1, 0.01, 0.008.
+
+Let's first start with cp=0.1.
+
+```{r}
+over50K=ifelse(dataset$num_salary==1, "Yes", "No")
+dataset<-data.frame(dataset, over50K)
+
+```
+
+```{r}
+#Remove salary, num_salary
+
+dataset.salary <- subset(dataset, select = -c(salary, num_salary))
+
+head(dataset.salary)
+
+
+
+```
+
+```{r}
+dataset.salary$over50K = as.factor(dataset$over50K)
+class(dataset.salary$over50K)
+
+set.seed(1234)
+train = seq_len(10000)
+dataset.train=dataset.salary[train,]
+dataset.test=dataset.salary[-train,]
+
+over50K.test=over50K[-train] 
+
+#CP=0.1
+
+fit.tree = rpart(over50K ~ ., data=dataset.train, method = "class", cp=0.1)
+fit.tree
+rpart.plot(fit.tree)
+
+```
+
+```{r}
+# Checking the order of variable importance
+fit.tree$variable.importance
+pred.tree = predict(fit.tree, dataset.test, type = "class")
+confMatBeforePruning=table(pred.tree,over50K.test)
+#plotcp(fit.tree)
+printcp(fit.tree)
+
+```
+
+```{r}
+#calculate accuracy:
+accuracy <- sum(diag(confMatBeforePruning))/sum(confMatBeforePruning)
+accuracy
+
+#calculate sensitivity:
+tp <- confMatBeforePruning[2, 2] 
+fn <- confMatBeforePruning[2, 1]
+sensitivity <- tp / (tp + fn)
+sensitivity
+
+#calculate specificity:
+tn <- confMatBeforePruning[1, 1]
+fp <- confMatBeforePruning[1, 2]
+
+specificity <- tn / (tn + fp)
+specificity
+
+#calculate precision:
+tp <- confMatBeforePruning[2, 2]
+fp <- confMatBeforePruning[1, 2]
+
+precision <- tp / (tp + fp)
+precision
+
+```
+
+```{r}
+# Explicitly request the lowest cp value
+fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
+bestcp <-fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
+pruned.tree <- prune(fit.tree, cp = bestcp)
+rpart.plot(pruned.tree)
+pruned.tree
+
+```
+
+```{r}
+# Alternate specification 
+pred.prune = predict(pruned.tree, dataset.test, type="class")
+confMatAfterPruning=table(pred.prune, over50K.test)
+
+#calculate accuracy:
+accuracy <- sum(diag(confMatAfterPruning))/sum(confMatAfterPruning)
+accuracy
+
+#calculate sensitivity:
+tp <- confMatAfterPruning[2, 2] 
+fn <- confMatAfterPruning[2, 1]
+sensitivity <- tp / (tp + fn)
+sensitivity
+
+#calculate specificity:
+tn <- confMatAfterPruning[1, 1]
+fp <- confMatAfterPruning[1, 2]
+
+specificity <- tn / (tn + fp)
+specificity
+
+#calculate precision:
+tp <- confMatAfterPruning[2, 2]
+fp <- confMatAfterPruning[1, 2]
+
+precision <- tp / (tp + fp)
+precision
+```
+
+**Tree Explanation:** The root node represents the entire dataset, where
+the majority class is 'No.' The first split is based on the condition
+'relationship' \>= 1.5. If true, the prediction is 'No'; otherwise, it
+goes to the next split. The second split is based on 'education.num' \<
+12.5. If true, the prediction is 'No'; otherwise, it goes to the third
+split. The third split is based on 'education.num' \>= 12.5. If true,
+the prediction is 'Yes'; otherwise, it goes to the fourth split.
+
+We noticed that there is not difference in the tree structure or
+evaluation metrics after pruning.
+
+Now, let's observe the outcome when we change the cp to 0.01.
+
+```{r}
+#CP=0.01
+
+fit.tree = rpart(over50K ~ ., data=dataset.train, method = "class", cp=0.01)
+fit.tree
+rpart.plot(fit.tree)
+
+```
+
+```{r}
+# Checking the order of variable importance
+fit.tree$variable.importance
+pred.tree = predict(fit.tree, dataset.test, type = "class")
+confMatBeforePruning=table(pred.tree,over50K.test)
+#plotcp(fit.tree)
+printcp(fit.tree)
+
+```
+
+```{r}
+#calculate accuracy:
+accuracy <- sum(diag(confMatBeforePruning))/sum(confMatBeforePruning)
+accuracy
+
+#calculate sensitivity:
+tp <- confMatBeforePruning[2, 2] 
+fn <- confMatBeforePruning[2, 1]
+sensitivity <- tp / (tp + fn)
+sensitivity
+
+#calculate specificity:
+tn <- confMatBeforePruning[1, 1]
+fp <- confMatBeforePruning[1, 2]
+
+specificity <- tn / (tn + fp)
+specificity
+
+#calculate precision:
+tp <- confMatBeforePruning[2, 2]
+fp <- confMatBeforePruning[1, 2]
+
+precision <- tp / (tp + fp)
+precision
+
+```
+
+```{r}
+# Explicitly request the lowest cp value
+fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
+bestcp <-fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
+pruned.tree <- prune(fit.tree, cp = bestcp)
+rpart.plot(pruned.tree)
+pruned.tree
+
+```
+
+```{r}
+# Alternate specification 
+pred.prune = predict(pruned.tree, dataset.test, type="class")
+confMatAfterPruning=table(pred.prune, over50K.test)
+
+#calculate accuracy:
+accuracy <- sum(diag(confMatAfterPruning))/sum(confMatAfterPruning)
+accuracy
+
+#calculate sensitivity:
+tp <- confMatAfterPruning[2, 2] 
+fn <- confMatAfterPruning[2, 1]
+sensitivity <- tp / (tp + fn)
+sensitivity
+
+#calculate specificity:
+tn <- confMatAfterPruning[1, 1]
+fp <- confMatAfterPruning[1, 2]
+
+specificity <- tn / (tn + fp)
+specificity
+
+#calculate precision:
+tp <- confMatAfterPruning[2, 2]
+fp <- confMatAfterPruning[1, 2]
+
+precision <- tp / (tp + fp)
+precision
+```
+
+**Tree Explanation:** Root Node (Node 1): This is the starting point,
+representing the entire dataset. The majority class is 'No,' and the
+tree begins by considering the 'relationship' feature. Probabilities:
+(0.7627 for 'No', 0.2373 for 'Yes')
+
+Splitting Node (Node 2): If the 'relationship' is greater than or equal
+to 1.5, the prediction is 'No' with a high probability. Otherwise, it
+moves to the next split. Probabilities: (0.9002 for 'No', 0.0998 for
+'Yes')
+
+Child Node 4:
+
+If 'relationship' is less than 5.5, the prediction is 'No' with a high
+probability. This is a terminal node denoted by '\*', meaning no further
+splits occur. Probabilities: (0.9347 for 'No', 0.0653 for 'Yes')
+
+Child Node 5:
+
+If 'relationship' is greater than or equal to 5.5, it further considers
+the 'education.num' feature. Probabilities: (0.5171 for 'No', 0.4829 for
+'Yes')
+
+Child Node 10:
+
+If 'education.num' is less than 10.5, the prediction is 'No' with a high
+probability. This is another terminal node.
+
+Probabilities: (0.6568 for 'No', 0.3432 for 'Yes')
+
+Child Node 11:
+
+If 'education.num' is greater than or equal to 10.5, the prediction is
+'Yes' with a high probability. This is also a terminal node.
+Probabilities: (0.2990 for 'No', 0.7010 for 'Yes')
+
+Child Node 3:
+
+If 'relationship' is less than 1.5, it further considers the
+'education.num' and 'hours.per.week' features.
+
+Probabilities: (0.5556 for 'No', 0.4444 for 'Yes')
+
+Child Node 6:
+
+If 'education.num' is less than 12.5, the prediction is 'No' with a high
+probability. Another terminal node. Probabilities: (0.6692 for 'No',
+0.3308 for 'Yes')
+
+Child Node 7:
+
+If 'education.num' is greater than or equal to 12.5, it further
+considers the 'hours.per.week' feature.
+
+Probabilities: (0.2917 for 'No', 0.7083 for 'Yes')
+
+Child Node 14:
+
+If 'hours.per.week' is less than -0.7738939, the prediction is 'No' with
+a high probability. This is a terminal node. Probabilities: (0.6506 for
+'No', 0.3494 for 'Yes')
+
+Child Node 15:
+
+If 'hours.per.week' is greater than or equal to -0.7738939, the
+prediction is 'Yes' with a high probability. Another terminal node.
+Probabilities: (0.2650 for 'No', 0.7350 for 'Yes')
+
+To summarize, the tree uses conditions based on the 'relationship,'
+'education.num,' and 'hours.per.week' features to make predictions. The
+tree structure does not change even after pruning.
+
+Finally, let's set the cp to 0.0008 and observe the results.
+
+```{r}
+#CP=0.0008
+
+fit.tree = rpart(over50K ~ ., data=dataset.train, method = "class", cp=0.0008)
+fit.tree
+rpart.plot(fit.tree)
+
+
+```
+
+**Tree Explanation:** The decision tree predicts binary outcomes ('Yes'
+or 'No') based on various features. The initial split is made on
+'relationship,' with subsequent splits involving features such as
+'education.num,' 'hours.per.week,' 'fnlwgt,' 'occupation,' 'age,'
+'workclass,' and 'race.' The tree is moderately complex, and needs
+pruning.
+
+```{r}
+# Checking the order of variable importance
+fit.tree$variable.importance
+pred.tree = predict(fit.tree, dataset.test, type = "class")
+confMatBeforePruning=table(pred.tree,over50K.test)
+#plotcp(fit.tree)
+printcp(fit.tree)
+
+```
+
+```{r}
+#calculate accuracy:
+accuracy <- sum(diag(confMatBeforePruning))/sum(confMatBeforePruning)
+accuracy
+
+#calculate sensitivity:
+tp <- confMatBeforePruning[2, 2] 
+fn <- confMatBeforePruning[2, 1]
+sensitivity <- tp / (tp + fn)
+sensitivity
+
+#calculate specificity:
+tn <- confMatBeforePruning[1, 1]
+fp <- confMatBeforePruning[1, 2]
+
+specificity <- tn / (tn + fp)
+specificity
+
+#calculate precision:
+tp <- confMatBeforePruning[2, 2]
+fp <- confMatBeforePruning[1, 2]
+
+precision <- tp / (tp + fp)
+precision
+
+```
+
+```{r}
+# Explicitly request the lowest cp value
+fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
+bestcp <-fit.tree$cptable[which.min(fit.tree$cptable[,"xerror"]),"CP"]
+pruned.tree <- prune(fit.tree, cp = bestcp)
+rpart.plot(pruned.tree)
+pruned.tree
+
+```
+
+**Tree Explanation:** After pruning, the decision tree is simplified,
+and some branches have been pruned. The root node indicates that in the
+dataset of 10,000 instances, 2,373 instances are predicted as 'No,' and
+the remaining 7,627 as 'Yes' (with probabilities 0.7627 and 0.2373,
+respectively).
+
+The key split is still based on the 'relationship' feature. If
+'relationship' is less than 1.5, the model predicts 'No' for 3,990
+instances. If 'relationship' is 1.5 or greater, further splits occur
+based on 'education.num,' 'hours.per.week,' and 'fnlwgt.'
+
+```{r}
+# Alternate specification 
+pred.prune = predict(pruned.tree, dataset.test, type="class")
+confMatAfterPruning=table(pred.prune, over50K.test)
+
+#calculate accuracy:
+accuracy <- sum(diag(confMatAfterPruning))/sum(confMatAfterPruning)
+accuracy
+
+#calculate sensitivity:
+tp <- confMatAfterPruning[2, 2] 
+fn <- confMatAfterPruning[2, 1]
+sensitivity <- tp / (tp + fn)
+sensitivity
+
+#calculate specificity:
+tn <- confMatAfterPruning[1, 1]
+fp <- confMatAfterPruning[1, 2]
+
+specificity <- tn / (tn + fp)
+specificity
+
+#calculate precision:
+tp <- confMatAfterPruning[2, 2]
+fp <- confMatAfterPruning[1, 2]
+
+precision <- tp / (tp + fp)
+precision
+```
+
+**Summary:**
+
+*cp=0.1 results:*
+
+The results indicates a moderate level of accuracy with a sensitivity
+that is higher than precision. It suggests a trade-off between correctly
+identifying positive instances and minimizing false positives.
+
+*cp=0.01 results:*
+
+The model with cp=0.01 shows slight improvement in accuracy and
+precision compared to the previous set. Sensitivity and specificity
+remain at similar levels.
+
+*cp=0.0008 results (before pruning):* The model before pruning has a
+higher specificity, indicating a better ability to correctly identify
+negative instances. However, sensitivity is comparatively lower,
+suggesting a higher rate of false negatives.
+
+*cp=0.0008 results (after pruning):* After pruning with the same cp
+value, the model shows an improvement in accuracy and sensitivity.
+However, precision has decreased slightly. Pruning likely helped in
+reducing overfitting, leading to better generalization.
+
+### C4.5 Algorithm
+
+C4.5 algorithm is an extension of the ID3 algorithm that chooses the
+attribute of the data that most effectively splits its set of samples
+into subsets, enriched in one class or the other. The splitting
+criterion is the normalized information gain.[4]
+
+In this algorithm, we will be using the library 'RWeka' and the package
+'partykit'. The 'RWeka' package in R provides an interface to Weka, a
+popular collection of machine learning algorithms implemented in Java.
+And 'partykit' complements it by providing tools for visualizing and
+interpreting the resulting tree models.
+
+We will test 3 different splits; 80-20, 70-30, 60-40, starting with
+60-40:
+
+```{r}
+
+
+#Note: Remove over50K & num_salary first
+dataset <- subset(dataset, select = -c(over50K, num_salary))
+
+sampleDataset <- dataset[1:10000, ]
+set.seed(1234)
+# Create a training set (60% of the data) and a testing set (40% of the data)
+index <- createDataPartition(sampleDataset$salary, p = 0.6, list = FALSE)
+training_set <- sampleDataset[index, ]
+testing_set <- sampleDataset[-index, ]
+
+# Train the model using the training set
+C45Fit <- train(salary ~ ., method = "J48", data = training_set, tuneLength = 5)
+
+# Extract the final model
+final_model <- C45Fit$finalModel
+
+# Plot the final model 
+ plot(final_model)
+  print(final_model)
+
+
+```
+
+**Tree Explanation:** The primary split is made based on the
+'relationship' feature, which is a categorical variable representing the
+relationship status. This suggests that relationship status is
+considered crucial in determining income levels.
+
+For instances where 'relationship' is less than or equal to 1, the
+decision tree further considers 'education.num' and 'hours.per.week'.
+
+If 'relationship' is greater than 1, the model looks at 'education.num'
+again and distinguishes income levels based on relationship status. This
+indicates that these features are considered significant predictors for
+this group.
+
+```{r}
+
+# Make predictions on the testing set
+predictions <- predict(final_model, newdata = testing_set)
+
+# Convert predictions and actual values to factors
+predictions <- as.factor(predictions)
+testing_set$salary <- as.factor(testing_set$salary)
+
+# Create a confusion matrix
+conf_matrix <- confusionMatrix(predictions, testing_set$salary)
+
+# Print the confusion matrix
+print(conf_matrix)
+```
+
+Now we test 70/30 split:
+
+```{r}
+# Create a training set (70% of the data) and a testing set (30% of the data)
+index <- createDataPartition(sampleDataset$salary, p = 0.7, list = FALSE)
+training_set <- sampleDataset[index, ]
+testing_set <- sampleDataset[-index, ]
+
+# Train the model using the training set
+C45Fit <- train(salary ~ ., method = "J48", data = training_set, tuneLength = 5)
+
+# Extract the final model
+final_model <- C45Fit$finalModel
+
+# Plot the final model 
+ plot(final_model)
+  print(final_model)
+
+```
+
+**Tree Explanation:** The tree predicts based on marital status,
+education, sex, hours worked per week, and fnlwgt. The tree first
+considers marital status and education, indicating their significant
+influence on income prediction. Lower education levels (12 or below) in
+combination with certain marital statuses tend to predict income below
+\$50K.
+
+For individuals with higher education levels (\>12) and certain marital
+statuses, the tree considers the impact of hours worked per week. More
+hours worked per week generally correlate with higher income (\>50K).
+
+Within specific conditions of marital status, education, and hours
+worked, the tree differentiates predictions based on sex and fnlwgt.
+Males (sex=1) with lower fnlwgt are more likely to have higher income,
+while for females, the impact of education level becomes crucial.
+
+```{r}
+# Make predictions on the testing set
+predictions <- predict(final_model, newdata = testing_set)
+
+# Convert predictions and actual values to factors
+predictions <- as.factor(predictions)
+testing_set$salary <- as.factor(testing_set$salary)
+
+# Create a confusion matrix
+conf_matrix <- confusionMatrix(predictions, testing_set$salary)
+
+# Print the confusion matrix
+print(conf_matrix)
+
+```
+
+Finally, the 80/20 split:
+
+```{r}
+##80/20 split: 
+# Set seed for reproducibility
+set.seed(1234)
+
+# Create a training set (80% of the data) and a testing set (20% of the data)
+index <- createDataPartition(sampleDataset$salary, p = 0.8, list = FALSE)
+training_set <- sampleDataset[index, ]
+testing_set <- sampleDataset[-index, ]
+
+# Train the model using the training set
+C45Fit <- train(salary ~ ., method = "J48", data = training_set, tuneLength = 5)
+
+# Extract the final model
+final_model <- C45Fit$finalModel
+
+# Plot the final model 
+ plot(final_model)
+ 
+ print(final_model)
+
+
+
+```
+
+**Tree Explanation:** The tree predicts based on marital status,
+education, sex, hours worked per week, and fnlwgt. The tree first
+considers marital status and education, indicating their significant
+influence on income prediction. Lower education levels (12 or below) in
+combination with certain marital statuses tend to predict income below
+\$50K.
+
+For individuals with higher education levels (\>12) and certain marital
+statuses, the tree considers the impact of hours worked per week. More
+hours worked per week generally correlate with higher income (\>50K).
+
+Within specific conditions of marital status, education, and hours
+worked, the tree differentiates predictions based on sex and fnlwgt.
+Males (sex=1) with lower fnlwgt are more likely to have higher income,
+while for females, the impact of education level becomes crucial.
+
+```{r}
+# Make predictions on the testing set
+predictions <- predict(final_model, newdata = testing_set)
+
+# Convert predictions and actual values to factors
+predictions <- as.factor(predictions)
+testing_set$salary <- as.factor(testing_set$salary)
+
+# Create a confusion matrix
+conf_matrix <- confusionMatrix(predictions, testing_set$salary)
+
+# Print the confusion matrix
+print(conf_matrix)
+```
+
+**Summary:** These results indicate that the C4.5 algorithm performed
+well, with relatively high accuracy and sensitivity across different
+training/testing splits. The precision and specificity also show a
+consistent performance in identifying positive instances.
+
+**Recommendation:**
+
+Generally speaking, most of the algorithms had a high accuracy. However,
+because our dataset is imbalanced, we must also take into account
+sensitivity, precision, and specificity.
+
+After observing the results of all three algorithms, we can conclude the
+following:
+
+-   CART shows improvement in Accuracy after pruning, but Precision
+    decreases. exhibits variability based on pruning parameters, with
+    improvements in accuracy after pruning but reduced precision.
+
+-   ID3 shows consistent performance across different training/testing
+    splits. It maintains relatively high accuracy and sensitivity, but
+    there is some variability in specificity and precision.
+
+-   C4.5 shows stable Accuracy, with balanced Sensitivity and
+    Specificity.
+
+Thus, we've believe that the ID3 algorithm is the best choice, as it
+appears to have a relatively good performance across different
+training/testing splits for our salary prediction dataset. ID3
+consistently shows high accuracy, sensitivity, and precision.
+
+### Evaluation and Comparison: Classification
+
+## Classification:
+
+**ID3 Algorithm Evaluation:**
+
++------------+------------+------------+------------+
+|            | 80%        | 70%        | 60%        |
+|            | Training,  | Training,  | Training,  |
+|            | 20%        | 30%        | 40%        |
+|            | Testing    | Testing    | Testing    |
++============+============+============+============+
+| Accuracy   | 82         | 82         | 82         |
++------------+------------+------------+------------+
+| Precision  | 83         | 87         | 85         |
++------------+------------+------------+------------+
+| Se         | 96         | 91         | 93         |
+| nsitivity  |            |            |            |
++------------+------------+------------+------------+
+| Sp         | 37         | 55         | 45         |
+| ecificity  |            |            |            |
++------------+------------+------------+------------+
+
+#### Analysis
+
+*Accuracy:* The accuracy is consistent across the different splits,
+remaining at 82%. This suggests that the model is performing
+consistently in terms of overall correct predictions.
+
+*Sensitivity:* Sensitivity measures the ability of the model to
+correctly identify positive instances (e.g., correct identification of a
+particular class). It shows a slight variation but generally remains
+high, ranging from 91% to 96%. This indicates that the model is good at
+capturing instances of the positive class.
+
+*Specificity:* Specificity measures the ability of the model to
+correctly identify negative instances. It varies more noticeably, from
+37% to 55%. A lower specificity suggests that the model may struggle
+more with correctly identifying negative instances.
+
+*Precision:* Precision is the proportion of true positive predictions
+out of all positive predictions. It ranges from 83% to 87%, showing
+relatively consistent performance in terms of precision across the
+different training-testing splits.
+
+In summary, the model seems to have consistent accuracy, but there are
+variations in how well it performs in terms of sensitivity and
+specificity across different training-testing splits.
+
+**CART Algorithm Evaluation:**
+
++-----------+-----------+-----------+-----------+
+|           | cp = 0.1  | cp = 0.01 | cp = 0 .  |
+|           |           |           | 0008      |
+|           |           |           |           |
+|           |           |           | Before/   |
+|           |           |           | After     |
+|           |           |           | Pruning   |
++===========+===========+===========+===========+
+| Accuracy  | 81        | 82        | 82/83     |
++-----------+-----------+-----------+-----------+
+| Precision | 37        | 41        | 53/52     |
++-----------+-----------+-----------+-----------+
+| S         | 73        | 74        | 66/70     |
+| e         |           |           |           |
+| nsitivity |           |           |           |
++-----------+-----------+-----------+-----------+
+| S         | 83        | 84        | 86/86     |
+| p         |           |           |           |
+| ecificity |           |           |           |
++-----------+-----------+-----------+-----------+
+
+#### Analysis:
+
+*Accuracy:* The accuracy ranges from 81% to 83%, showing stability
+across different cp values.
+
+*Sensitivity:* Sensitivity improves from 66% (before pruning) to 70%
+(after pruning), indicating better identification of positive instances.
+
+*Specificity:* Specificity is relatively stable, with values ranging
+from 83% to 86%.
+
+*Precision:* Precision varies between 37% and 53%, with the highest
+precision achieved before pruning.
+
+In summary, lower values of the complexity parameter (cp) and pruning
+appear to lead to better results in terms of accuracy, sensitivity,
+specificity, and precision for the CART algorithm in our dataset.
+
+**C4.5 Algorithm Evaluation:**
+
++-----------+-----------+-----------+-----------+
+|           | 80%       | 70%       | 60%       |
+|           | Training, | Training, | Training, |
+|           | 20%       | 30%       | 40%       |
+|           | Testing   | Testing   | Testing   |
++===========+===========+===========+===========+
+| Accuracy  | 82        | 83        | 82        |
++-----------+-----------+-----------+-----------+
+| Precision | 84        | 84        | 84        |
++-----------+-----------+-----------+-----------+
+| S         | 95        | 96        | 94        |
+| e         |           |           |           |
+| nsitivity |           |           |           |
++-----------+-----------+-----------+-----------+
+| S         | 42        | 40        | 43        |
+| p         |           |           |           |
+| ecificity |           |           |           |
++-----------+-----------+-----------+-----------+
+
+#### Analysis:
+
+*Accuracy:* The accuracy is relatively stable across different
+training/testing splits, ranging from 82% to 83%.
+
+*Sensitivity:* Sensitivity is high, indicating that the algorithm
+performs well in identifying positive instances.
+
+*Specificity:* Specificity is moderate, suggesting that the algorithm
+has some difficulty correctly identifying negative instances.
+
+*Precision:* Precision is consistent at 84%, implying that when the
+algorithm predicts the positive class, it is correct 84% of the time.
+
+In summary, the model appears to perform consistently across different
+training/testing splits. It exhibits good sensitivity and precision, but
+there's room for improvement in specificity.
+
+# Findings
+
+To get accurate results, we have applied many preprocessing techniques,
+such as data cleaning and data transformation. We have removed all null,
+missing values and outliers that can badly affect the results, and
+finally, we have applied data transformation techniques--encoding and
+normalization--to give them equal weight and to facilitate data handling
+during data mining tasks.
+
+For classification, we used the decision tree approach to build our
+model, and evaluated 3 different algorithms; ID3, C4.5, and CART. For
+the ID3 and C4.5 algorithms, we tried 3 different sizes of training and
+testing data to achieve the best outcome for construction and
+evaluation. For the CART algorithm, we changed the cp value 3 times,
+while observing and comparing the results.
+
+We've observed that ID3 consistently demonstrated high sensitivity,
+indicating its ability to correctly identify positive cases. However, it
+had lower specificity, suggesting a higher rate of false positives. C4.5
+maintained balanced performance across sensitivity, specificity, and
+precision, and CART showed competitive accuracy but had varying
+sensitivity and lower precision.
+
+After evaluating and analyzing the results of the classification
+algorithms, we concluded that the best performing algorithm was the ID3
+algorithm. The C4.5 tree with an 70% training and 30% testing split had
+the best overall performance for our dataset. The 70/30 tree achieved an
+accuracy of 83%, sensitivity of 96%, specificity of 40%, and precision
+of 84%.
+
+![C4.5 70/30 Tree](images/plot-02)
+
+To reiterate the tree explanation: People who were absent spouses,
+separated, widowed, or never married were predicted to have a lower
+salary. Meanwhile, individuals who were divorced, Armed Forces spouses,
+and civilian spouses, education was taken into account. Those who had a
+Masters degree, attended professional school, or have a doctorate degree
+AND were divorced were predicted to have higher salaries. Meanwhile, if
+they weren't, the worked hours are considered. If they were high, higher
+salaries were predicted. If not, gender is considered. For men, a higher
+fnlwgt resulted in lower salary, and a lower fnlwgt resulted in higher
+salaries. For women, those who have earned a doctorate degree were
+predicted to have higher salaries, otherwise they were predicted to have
+lower salaries.
+
+What this tells us is that there's a great emphasis on education level
+and marital status in the work field. Employers can gain insights into
+which factors, such as education level, marital status, hours.per.week,
+and so on, are influential in determining whether an individual earns
+above or below a certain threshold. Moreover, knowing the influential
+factors can guide employers in developing targeted recruitment
+strategies. So if certain education levels or marital statuses are
+associated with higher income, employers can focus their recruitment
+efforts on individuals with those characteristics.
+
+As for clustering, the clustering process involved analyzing the dataset
+to group similar data points together. K-means clustering was used with
+different values of k = 2, 3, and 4. Each clustering iteration was
+evaluated using various metrics like silhouette scores, within-cluster
+sum of squares (WCSS), BCubed precision, and recall.
+
+Silhouette Method: The silhouette method indicated different average
+silhouette scores for different values of k. Optimal k may vary based on
+the silhouette method, suggesting k=3 as having the highest silhouette
+width.
+
+Elbow Method: The elbow method demonstrated a significant drop in WCSS
+up to k=2, after which the decrease slowed down considerably. This
+implies that k=2 could be an optimal choice based on the within-cluster
+sum of squares.
+
+**Evaluation of Clustering Results:**
+
+K=3 seemed to strike a balance between silhouette width and reasonable
+precision and recall. K=4 showed high precision but at the expense of
+lower recall, possibly due to fragmentation into smaller clusters. K=2
+Notably excelled in recall, implying its ability to encompass a wider
+range of relevant instances.
+
+**Clustering vs Classification** Based on our results and the nature of
+our dataset, we believe that classification had a better performance
+than clustering.
+
+# References
+
+[1]Chen, J. (no date) How a histogram works to display data,
+Investopedia. Available at:
+<https://www.investopedia.com/terms/h/histogram.asp> (Accessed: 28
+November 2023).
+
+[2]Healy, Y.H. and C. (no date) Barplot, Barplot -- from Data to Viz.
+Available at: <https://www.data-to-viz.com/graph/barplot.html>
+(Accessed: 28 November 2023).
+
+[3]Synergy Codes (2022) What is a density plot? definition, importance,
+and examples -- glossary, Synergy Codes. Available at:
+<https://synergycodes.com/glossary/what-is-density-plot/> (Accessed: 28
+November 2023).
+
+[4]Khanna, N. (2021) J48 classification (C4.5 algorithm) in a Nutshell,
+Medium. Available at:
+[https://medium.com/\@nilimakhanna1/j48-classification-c4-5-algorithm-in-a-nutshell-24c50d20658e](https://medium.com/@nilimakhanna1/j48-classification-c4-5-algorithm-in-a-nutshell-24c50d20658e){.uri}
+(Accessed: 30 November 2023).
